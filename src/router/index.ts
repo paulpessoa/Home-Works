@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 
 import HomeDashboard from '../views/HomeDashboard.vue'
 import PageAuth from '../views/PageAuth.vue'
+import ErrorComponent from '@/components/ErrorComponent.vue'
 
 import FormLogin from "@/components/FormLogin.vue"
 import FormRegister from "@/components/FormRegister.vue"
@@ -14,7 +15,17 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
+    path: '*',
+    name: 'error',
+    component: ErrorComponent
+  },
+  {
     path: '/',
+    name: 'home',
+    component: HomeDashboard
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeDashboard
   },

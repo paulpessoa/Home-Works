@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
 
       <v-btn href="#" text>
-        <span class="mr-2">Menu</span>
+        <span class="mr-2">logout</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>

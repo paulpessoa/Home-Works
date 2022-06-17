@@ -1,6 +1,5 @@
 <template>
   <div>
-  <hello-world />
   <v-card class="mx-auto" max-width="344">
     <v-card-title>Subject Register</v-card-title>
     
