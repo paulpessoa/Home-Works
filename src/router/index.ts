@@ -1,6 +1,14 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+import HomeDashboard from '../views/HomeDashboard.vue'
+import PageAuth from '../views/PageAuth.vue'
+
+import FormLogin from "@/components/FormLogin.vue"
+import FormRegister from "@/components/FormRegister.vue"
+import EmailConfirmation from '@/components/EmailConfirmation.vue'
+import RecoveryPassword from "@/components/RecoveryPassword.vue"
+import NewPassword from '@/components/NewPassword.vue'
 
 Vue.use(VueRouter)
 
@@ -8,15 +16,39 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeDashboard
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/auth',
+    name: 'auth',
+    component: PageAuth,
+    children: [
+      {
+      path: '/login',
+      name: 'login',
+      component: FormLogin
+      },
+      {
+      path: '/register',
+      name: 'register',
+      component: FormRegister
+      },
+      {
+      path: '/email-confirmation',
+      name: 'email-confirmation',
+      component: EmailConfirmation
+      },
+      {
+      path: '/recovery',
+      name: 'recovery',
+      component: RecoveryPassword
+      }, 
+      {
+      path: '/new-password',
+      name: 'new-password',
+      component: NewPassword
+      }, 
+  ]
   }
 ]
 
