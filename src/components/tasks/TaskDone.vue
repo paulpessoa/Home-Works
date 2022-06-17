@@ -1,6 +1,6 @@
 <template>
   <div>
-  <v-card class="mx-auto" max-width="344">
+  <v-card outlined class="mx-auto" max-width="344">
     <v-card-title>Task Done</v-card-title>
     
     <v-card-actions>

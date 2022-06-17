@@ -1,18 +1,30 @@
 <template>
   <div>
-  <v-card class="mx-auto" max-width="344">
-    <v-card-title>Acessar</v-card-title>
-    <v-card-subtitle> Aqui um subtitulo </v-card-subtitle>
-    <v-card-actions>
-      <v-btn color="orange lighten-2" text> Ainda não tenho Cadastro </v-btn>     
-    </v-card-actions>
-  </v-card>
+    <v-card outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
+      <v-card-title class="justify-center mb-2">Authentication</v-card-title>
+      <v-form ref="form">       
+        <v-text-field filled type="mail" label="E-mail" required persistent-hint outlined>
+        </v-text-field>
+        <v-text-field filled :append-icon="showKey2 ? 'mdi-eye' : 'mdi-eye-off'" :type="showKey2 ? 'text' : 'password'"
+          label="Password Confirm" required persistent-hint outlined @click:append="showKey2 = !showKey2">
+        </v-text-field>
+        <v-btn block x-large type="submit" color="primary" depressed class="justify-center">Login</v-btn>
+      </v-form>
+      <v-card-actions class="text-xs-center py-4">
+        <v-btn block x-large color="orange lighten-2" text to="/register"> register </v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'FormLogin',    
-  }
+export default {
+  name: 'FormLogin',
+  data: () => ({
+    showKey1: false,
+    showKey2: false,
+  }),
+
+}
 </script>

@@ -25,11 +25,6 @@ const routes: Array<RouteConfig> = [
     component: HomeDashboard
   },
   {
-    path: '/home',
-    name: 'home',
-    component: HomeDashboard
-  },
-  {
     path: '/auth',
     name: 'auth',
     component: PageAuth,

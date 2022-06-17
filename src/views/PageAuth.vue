@@ -1,7 +1,6 @@
 <template>
-  <div class="pageauth">
-    <h1>This is an Auth page</h1>
-    <router-view />
+  <div>
+    <router-view/>
   </div>
 </template>
 
