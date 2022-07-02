@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
-      <v-card-title class="justify-center mb-2">Authentication</v-card-title>
+      <v-card-title class="justify-center mb-2">Login</v-card-title>
       <v-form ref="form">       
         <v-text-field filled type="mail" label="E-mail" required persistent-hint outlined>
         </v-text-field>

@@ -7,10 +7,11 @@
       </div>
       <v-spacer></v-spacer>
 
-      <v-btn href="#" text>
-        <span class="mr-2">logout</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-btn class="mr-2" href="/login" text> Login </v-btn>
+      <v-btn class="mr-2" href="/register" text> Cadastro </v-btn>
+      <v-btn class="mr-2" href="/email-confirmation" text> Verificar Email </v-btn>
+      <v-btn class="mr-2" href="/recovery" text> Recuperar Senha </v-btn>
+      <v-btn class="mr-2" href="/new-password" text> Nova Senha </v-btn>
     </v-app-bar>
     <v-main>
       <router-view />
