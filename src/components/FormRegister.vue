@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import axios from "axios";
 const url = "https://homeworks-api.vercel.app/account/register";
 
