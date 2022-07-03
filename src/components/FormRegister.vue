@@ -11,7 +11,7 @@
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined></v-text-field>
 
         <v-text-field v-model="password" filled :append-icon="showKey1 ? 'mdi-eye' : 'mdi-eye-off'" :type="showKey1 ? 'text' : 'password'" label="Password" required outlined @click:append="showKey1 = !showKey1"></v-text-field>
-        <v-btn block x-large type="submit" color="primary" depressed>Register</v-btn>
+        <v-btn block x-large type="submit" color="primary" depressed>Cadastrar</v-btn>
       </v-form>
       
       <v-alert class="mt-7" v-if="emailConfirm" dismissible  type="success">
@@ -54,13 +54,14 @@ export default {
         password: this.password,
       }).then(response => {
         console.log("DEU CERTO", response);
-          this.emailConfirm = "Voce esta sendo redirecionado em 5 segundos..."
+          this.emailConfirm = "Redirecionamento em 5 segundos..."
         setTimeout(() => {
           this.emailConfirm = false
-        }, 5000);
+        }, 4500);
 
-        setInterval(() => {
+       var mailconfirmation = setInterval(() => {
           this.$router.push({ name: 'email-confirmation' });
+          clearInterval(mailconfirmation)
         }, 5000);
         //alert(response.data.message.description)
         // window.location.href = '/login';

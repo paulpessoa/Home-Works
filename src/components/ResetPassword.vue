@@ -40,12 +40,12 @@ export default {
         password: this.password,
       }).then(response => {
         console.log("DEU CERTO", response);
-          this.emailConfirm = "O link de recuperação foi enviado para o seu e-mail"
+          this.emailConfirm = "Link de recuperação enviado por e-mail"
         setTimeout(() => {
           this.emailConfirm = false
-        }, 60000);
+        }, 20000);
 
-        
+          clearInterval(setTimeout)
         //this.$router.push({ name: 'login' });
 
         this.response = JSON.stringify(response, null, 2)

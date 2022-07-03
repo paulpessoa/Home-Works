@@ -37,12 +37,12 @@ export default {
         password: this.password,
       }).then(response => {
         console.log("DEU CERTO", response);
-          this.emailConfirm = "O link de confirmação foi enviado para o seu e-mail"
+          this.emailConfirm = "Link de verificção enviado por e-mail"
         setTimeout(() => {
           this.emailConfirm = false
-        }, 60000);
+        }, 45000);
 
-        
+          clearTimeout(setTimeout)
         //this.$router.push({ name: 'login' });
 
         this.response = JSON.stringify(response, null, 2)
