@@ -118,14 +118,28 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          console.log("DEU CERTO", response);
+          console.log("DEU CERTO", response.data.message.user.email, response);
+          var sessionMail = response.data.message.user.email
+         
+          function userEmail() {
+            sessionStorage.setItem("userEmail", sessionMail);  
+         
+          var blz = sessionStorage.getItem("userEmail");
+         
+          }
+          userEmail()
           this.emailConfirm = "Redirecionamento em 5 segundos...";
           setTimeout(() => {
             this.emailConfirm = false;
           }, 4500);
+          
+   
+          
 
           var mailconfirmation = setInterval(() => {
-            this.$router.push({ name: "email-confirmation" });
+            this.$router.push({ name: "email-confirmation",
+            email: sessionStorage.getItem("userEmail")
+            });
             clearInterval(mailconfirmation);
           }, 5000);
           //alert(response.data.message.description)

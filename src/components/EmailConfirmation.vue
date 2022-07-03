@@ -26,7 +26,7 @@ export default {
   name: 'EmailConfirmation',
   data: () => ({
   
-    email: null,
+    email: sessionStorage.getItem("userEmail"),
     emailConfirm: null
 
   }),
