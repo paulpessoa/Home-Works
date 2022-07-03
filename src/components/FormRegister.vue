@@ -1,29 +1,89 @@
 <template>
   <div>
     <v-card outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
-
       <v-card-title class="justify-center mb-2">Crie sua conta</v-card-title>
 
       <v-form ref="form" @submit.prevent="createUser">
+        <v-text-field
+          v-model="firstName"
+          :rules="nameRules"
+          filled
+          type="text"
+          label="First Name"
+          required
+          persistent-hint
+          outlined
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="lastName"
+          filled
+          type="text"
+          label="Last Name"
+          required
+          persistent-hint
+          outlined
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          filled
+          type="mail"
+          label="E-mail"
+          required
+          persistent-hint
+          outlined
+        >
+        </v-text-field>
 
-        <v-text-field v-model="firstName" filled type="text" label="First Name" required persistent-hint outlined></v-text-field>
-        <v-text-field v-model="lastName" filled type="text" label="Last Name" required persistent-hint outlined></v-text-field>
-        <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined></v-text-field>
+        <v-text-field
+          v-model="password"
+          filled
+          :append-icon="showKey1 ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showKey1 ? 'text' : 'password'"
+          label="Password"
+          required
+          outlined
+          counter
+          :rules="passwordRules"
+          @click:append="showKey1 = !showKey1"
+        ></v-text-field>
+        <v-text-field
+          v-model="confirmPassword"
+          filled
+          :append-icon="showKey2 ? 'mdi-eye' : 'mdi-eye-off'"
+          :disabled="!password"
+          :type="showKey2 ? 'text' : 'password'"
+          label="Confirm Password"
+          required
+          outlined
+          counter
+          :rules="[passwordConfirmationRule]"
+          @click:append="showKey2 = !showKey2"
+        ></v-text-field>
 
-        <v-text-field v-model="password" filled :append-icon="showKey1 ? 'mdi-eye' : 'mdi-eye-off'" :type="showKey1 ? 'text' : 'password'" label="Password" required outlined @click:append="showKey1 = !showKey1"></v-text-field>
-        <v-btn block x-large type="submit" color="primary" depressed>Cadastrar</v-btn>
+        <v-btn
+          block
+          x-large
+          type="submit"
+          color="primary"
+          depressed
+          :disabled="password !== confirmPassword" 
+          >Cadastrar</v-btn
+        >
       </v-form>
-      
-      <v-alert class="mt-7" v-if="emailConfirm" dismissible  type="success">
-          {{ emailConfirm }}
+
+      <v-alert class="mt-7" v-if="emailConfirm" dismissible type="success">
+        {{ emailConfirm }}
       </v-alert>
 
       <v-card-actions class="text-xs-center py-4">
-        <v-btn block x-large color="orange lighten-2" text href="/login"> login </v-btn>
+        <v-btn block x-large color="orange lighten-2" text href="/login">
+          login
+        </v-btn>
       </v-card-actions>
-
     </v-card>
-
   </div>
 </template>
 
@@ -36,43 +96,54 @@ export default {
   data: () => ({
     showKey1: false,
     showKey2: false,
-    
+
     firstName: null,
     lastName: null,
     email: null,
-    password: null,
-
-    emailConfirm: null
-    
+    password: "",
+    confirmPassword: null,
+    nameRules: [(v) => !!v || "Preencha este campo"],
+    emailRules: [(v) => /.+@.+\..+/.test(v) || "Informe um e-mail válido"],
+    passwordRules: [(v) => !!v || "Informe uma senha"],
+    confirmPasswordRules: [(v) => !!v || "Digite igual ao campo anterior"],
+    emailConfirm: null,
   }),
   methods: {
     createUser() {
-      axios.post(url, {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
-      }).then(response => {
-        console.log("DEU CERTO", response);
-          this.emailConfirm = "Redirecionamento em 5 segundos..."
-        setTimeout(() => {
-          this.emailConfirm = false
-        }, 4500);
+      axios
+        .post(url, {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          console.log("DEU CERTO", response);
+          this.emailConfirm = "Redirecionamento em 5 segundos...";
+          setTimeout(() => {
+            this.emailConfirm = false;
+          }, 4500);
 
-       var mailconfirmation = setInterval(() => {
-          this.$router.push({ name: 'email-confirmation' });
-          clearInterval(mailconfirmation)
-        }, 5000);
-        //alert(response.data.message.description)
-        // window.location.href = '/login';
-        // this.response = response.data 
-        // this.success = 'Data saved successfully';
-        this.response = JSON.stringify(response, null, 2)
-      }).catch(error => {
-        this.response = 'Error: ' + error.response.status
-        console.log("DEU ERRADO", response); 
-
-      })
+          var mailconfirmation = setInterval(() => {
+            this.$router.push({ name: "email-confirmation" });
+            clearInterval(mailconfirmation);
+          }, 5000);
+          //alert(response.data.message.description)
+          // window.location.href = '/login';
+          this.response = JSON.stringify(response, null, 2);
+        })
+        .catch((error) => {
+          this.response = "Error: " + error.response.status;
+          console.log("DEU ERRADO", response);
+        });
+    },
+  },
+  computed: {
+    passwordConfirmationRule() {
+      return () =>
+        this.password === this.confirmPassword
+          ? ""
+          : "Os senhas estão divergentes";
     },
   },
 };

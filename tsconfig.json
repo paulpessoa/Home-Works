@@ -13,6 +13,7 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "allowJs": true, //apagar apos corrigir tipagem
     "types": [
       "webpack-env"
     ],
