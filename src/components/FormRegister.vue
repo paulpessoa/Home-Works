@@ -54,13 +54,14 @@ export default {
         password: this.password,
       }).then(response => {
         console.log("DEU CERTO", response);
-          this.emailConfirm = "Verifique o seu e-mail"
+          this.emailConfirm = "Voce esta sendo redirecionado em 5 segundos..."
         setTimeout(() => {
           this.emailConfirm = false
-        }, 60000);
+        }, 5000);
 
-        
-        //this.$router.push({ name: 'login' });
+        setInterval(() => {
+          this.$router.push({ name: 'email-confirmation' });
+        }, 5000);
         //alert(response.data.message.description)
         // window.location.href = '/login';
         // this.response = response.data 
@@ -69,6 +70,7 @@ export default {
       }).catch(error => {
         this.response = 'Error: ' + error.response.status
         console.log("DEU ERRADO", response); 
+
       })
     },
   },

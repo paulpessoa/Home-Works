@@ -1,18 +1,21 @@
 <template>
   <div>
     <v-card outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
-      <v-card-title class="justify-center mb-2">Confirme o seu e-mail</v-card-title>
-      <v-form ref="form" @submit.prevent="emailVerify">       
+      <v-card-title class="justify-center mb-2">Reset Password</v-card-title>
+      <v-form ref="form" @submit.prevent="resetPassword">
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>
         </v-text-field>
-       
-        <v-btn block x-large type="submit" color="primary" depressed class="justify-center mb-6">Verify</v-btn>
+        
+        <v-btn block x-large type="submit" color="primary" depressed class="justify-center">Send e-mail</v-btn>
       </v-form>
       
-       <v-alert class="mt-7" v-if="emailConfirm" dismissible  type="success">
+      <v-alert class="mt-7" v-if="emailConfirm" dismissible  type="success">
           {{ emailConfirm }}
       </v-alert>
 
+      <v-card-actions class="text-xs-center py-4">
+        <v-btn block x-large color="orange lighten-2" text href="/login"> login </v-btn>
+      </v-card-actions>
     </v-card>
   </div>
 
@@ -20,10 +23,10 @@
 
 <script>
 import axios from "axios";
-const url = "https://homeworks-api.vercel.app/account/confirm";
+const url = "https://homeworks-api.vercel.app/account/reset/password";
 
 export default {
-  name: 'EmailConfirmation',
+  name: 'ResetPassword',
   data: () => ({
   
     email: null,
@@ -31,13 +34,13 @@ export default {
 
   }),
    methods: {
-    emailVerify() {
+    resetPassword() {
       axios.post(url, {
         email: this.email,
         password: this.password,
       }).then(response => {
         console.log("DEU CERTO", response);
-          this.emailConfirm = "O link de confirmação foi enviado para o seu e-mail"
+          this.emailConfirm = "O link de recuperação foi enviado para o seu e-mail"
         setTimeout(() => {
           this.emailConfirm = false
         }, 60000);

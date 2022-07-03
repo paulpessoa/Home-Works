@@ -8,7 +8,7 @@ import ErrorComponent from '@/components/ErrorComponent.vue'
 import FormLogin from "@/components/FormLogin.vue"
 import FormRegister from "@/components/FormRegister.vue"
 import EmailConfirmation from '@/components/EmailConfirmation.vue'
-import RecoveryPassword from "@/components/RecoveryPassword.vue"
+import ResetPassword from "@/components/ResetPassword.vue"
 import NewPassword from '@/components/NewPassword.vue'
 
 Vue.use(VueRouter)
@@ -45,9 +45,9 @@ const routes: Array<RouteConfig> = [
       component: EmailConfirmation
       },
       {
-      path: '/recovery',
-      name: 'recovery',
-      component: RecoveryPassword
+      path: '/reset-password',
+      name: 'reset-password',
+      component: ResetPassword
       }, 
       {
       path: '/new-password',

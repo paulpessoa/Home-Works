@@ -1,15 +1,18 @@
 <template>
   <div>
-  <h1>Home Dashboard</h1>
-  <p>cadastrar atividade </p>
-  <TaskRegister/>
-  <p> minhas atividades</p>
-  <TaskRemove/>
-  <TaskReport/>
-  <TaskDone/>
-  <SubjectRegister/>
-  <p>data table</p>
-
+  <div v-if="userTocken">
+      <h1>Home Dashboard</h1>
+      <p>cadastrar atividade </p>
+      <TaskRegister/>
+      <p> minhas atividades</p>
+      <TaskRemove/>
+      <TaskReport/>
+      <TaskDone/>
+      <SubjectRegister/>
+      <p>data table</p>
+  </div>
+  
+  <FormLogin v-else/>
   
 
   </div>
@@ -25,19 +28,20 @@
   import TaskReport from "@/components/tasks/TaskReport.vue"
   import TaskDone from "@/components/tasks/TaskDone.vue"
   import SubjectRegister from "@/components/tasks/SubjectRegister.vue"
+  import FormLogin from '@/components/FormLogin.vue'
 
   export default Vue.extend({
     name: 'HomeDashboard',
     data: () => ({
-      userTocken: null,
+      userTocken: true,
     }),
     components: {
       TaskRegister,
       TaskRemove,
       TaskReport,
       TaskDone,
-      SubjectRegister
-    },
-    
+      SubjectRegister,
+      FormLogin
+    },    
   })
 </script>

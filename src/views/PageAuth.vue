@@ -9,7 +9,7 @@
 import FormLogin from "@/components/FormLogin.vue"
 import FormRegister from "@/components/FormRegister.vue"
 import EmailConfirmation from '@/components/EmailConfirmation.vue'
-import RecoveryPassword from "@/components/RecoveryPassword.vue"
+import ResetPassword from "@/components/ResetPassword.vue"
 import NewPassword from '@/components/NewPassword.vue'
 
 
@@ -22,7 +22,7 @@ import NewPassword from '@/components/NewPassword.vue'
       FormLogin,
       FormRegister,
       EmailConfirmation,
-      RecoveryPassword,
+      ResetPassword,
       NewPassword
     },
   }
