@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div v-if="userTocken">
+  <div v-if="accessToken">
       <h1>Home Dashboard</h1>
       <p>cadastrar atividade </p>
       <TaskRegister/>
@@ -33,7 +33,7 @@
   export default Vue.extend({
     name: 'HomeDashboard',
     data: () => ({
-      userTocken: true,
+      accessToken: sessionStorage.getItem("accessToken"),
     }),
     components: {
       TaskRegister,
