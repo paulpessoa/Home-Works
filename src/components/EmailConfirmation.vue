@@ -37,7 +37,7 @@ export default {
         password: this.password,
       }).then(response => {
         console.log("DEU CERTO", response);
-          this.emailConfirm = "Link de verificção enviado por e-mail"
+          this.emailConfirm = response.data.message.description
         setTimeout(() => {
           this.emailConfirm = false
         }, 45000);

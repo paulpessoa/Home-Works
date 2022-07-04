@@ -123,12 +123,9 @@ export default {
          
           function userEmail() {
             sessionStorage.setItem("userEmail", sessionMail);  
-         
-          var blz = sessionStorage.getItem("userEmail");
-         
           }
           userEmail()
-          this.emailConfirm = "Redirecionamento em 5 segundos...";
+          this.emailConfirm = response.data.message.description;
           setTimeout(() => {
             this.emailConfirm = false;
           }, 4500);
