@@ -43,7 +43,7 @@ export default {
         }, 45000);
 
           clearTimeout(setTimeout)
-        //this.$router.push({ name: 'login' });
+        this.$router.push({ name: 'home' });
 
         this.response = JSON.stringify(response, null, 2)
       }).catch(error => {
