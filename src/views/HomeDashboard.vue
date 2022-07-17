@@ -1,15 +1,18 @@
 <template>
   <div>
-  <div v-if="accessToken">
-      <h1>Home Dashboard</h1>
-      <p>cadastrar atividade </p>
+  <div v-if="!accessToken">
+      <TaskTable/>      
+    <div v-if="null">
+      <p> cadastrar atividade </p>
       <TaskRegister/>
       <p> minhas atividades</p>
       <TaskRemove/>
       <TaskReport/>
       <TaskDone/>
       <SubjectRegister/>
-      <p>data table</p>
+
+    </div>      
+
   </div>
   
   <FormLogin v-else/>
@@ -23,6 +26,7 @@
   
   
   import Vue from 'vue'
+  import TaskTable from "@/components/tasks/TaskTable.vue"
   import TaskRegister from "@/components/tasks/TaskRegister.vue"
   import TaskRemove from "@/components/tasks/TaskRemove.vue"
   import TaskReport from "@/components/tasks/TaskReport.vue"
@@ -36,6 +40,7 @@
       accessToken: sessionStorage.getItem("accessToken"),
     }),
     components: {
+      TaskTable,
       TaskRegister,
       TaskRemove,
       TaskReport,
