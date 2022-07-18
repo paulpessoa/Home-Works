@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div v-if="!accessToken">
+  <div v-if="accessToken">
       <TaskTable/>      
     <div v-if="null">
       <p> cadastrar atividade </p>
