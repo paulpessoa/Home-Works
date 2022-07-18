@@ -4,74 +4,24 @@
       <v-card-title class="justify-center mb-2">Crie sua conta</v-card-title>
 
       <v-form ref="form" @submit.prevent="createUser">
-        <v-text-field
-          v-model="firstName"
-          :rules="nameRules"
-          filled
-          type="text"
-          label="First Name"
-          required
-          persistent-hint
-          outlined
-        >
+        <v-text-field v-model="firstName" :rules="nameRules" filled type="text" label="Nome" required persistent-hint
+          outlined>
         </v-text-field>
-        <v-text-field
-          v-model="lastName"
-          filled
-          type="text"
-          label="Last Name"
-          required
-          persistent-hint
-          outlined
-        >
+        <v-text-field v-model="lastName" filled type="text" label="Sobrenome" required persistent-hint outlined>
         </v-text-field>
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          filled
-          type="mail"
-          label="E-mail"
-          required
-          persistent-hint
-          outlined
-        >
+        <v-text-field v-model="email" :rules="emailRules" filled type="mail" label="E-mail" required persistent-hint
+          outlined>
         </v-text-field>
 
-        <v-text-field
-          v-model="password"
-          filled
-          :append-icon="showKey1 ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="showKey1 ? 'text' : 'password'"
-          label="Password"
-          required
-          outlined
-          counter
-          :rules="passwordRules"
-          @click:append="showKey1 = !showKey1"
-        ></v-text-field>
-        <v-text-field
-          v-model="confirmPassword"
-          filled
-          :append-icon="showKey2 ? 'mdi-eye' : 'mdi-eye-off'"
-          :disabled="!password"
-          :type="showKey2 ? 'text' : 'password'"
-          label="Confirm Password"
-          required
-          outlined
-          counter
-          :rules="[passwordConfirmationRule]"
-          @click:append="showKey2 = !showKey2"
-        ></v-text-field>
+        <v-text-field v-model="password" filled :append-icon="showKey1 ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showKey1 ? 'text' : 'password'" label="Senha" required outlined :rules="passwordRules"
+          @click:append="showKey1 = !showKey1"></v-text-field>
+        <v-text-field v-if="none" v-model="confirmPassword" filled :append-icon="showKey2 ? 'mdi-eye' : 'mdi-eye-off'"
+          :disabled="!password" :type="showKey2 ? 'text' : 'password'" label="Confirm Password" required outlined
+          counter :rules="[passwordConfirmationRule]" @click:append="showKey2 = !showKey2"></v-text-field>
 
-        <v-btn
-          block
-          x-large
-          type="submit"
-          color="primary"
-          depressed
-          :disabled="password !== confirmPassword" 
-          >Cadastrar</v-btn
-        >
+        <v-btn block x-large type="submit" color="primary" depressed :loading="isLoading"
+          :disabled="!firstName || !password || !email">Cadastrar</v-btn>
       </v-form>
 
       <v-alert class="mt-7" v-if="emailConfirm" dismissible type="success">
@@ -79,7 +29,11 @@
       </v-alert>
 
       <v-card-actions class="text-xs-center py-4">
-        <v-btn block x-large color="orange lighten-2" text href="/login">
+        <v-btn x-large color="orange lighten-2" text href="/reset-password">
+          Recuperar senha
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn  x-large color="orange lighten-2" text href="/login">
           login
         </v-btn>
       </v-card-actions>
@@ -94,6 +48,7 @@ const url = "https://homeworks-api.vercel.app/account/register";
 export default {
   name: "FormRegister",
   data: () => ({
+    isLoading: false,
     showKey1: false,
     showKey2: false,
 
@@ -110,6 +65,7 @@ export default {
   }),
   methods: {
     createUser() {
+      this.isLoading = true
       axios
         .post(url, {
           firstName: this.firstName,
@@ -120,25 +76,26 @@ export default {
         .then((response) => {
           console.log("DEU CERTO", response.data.message.user.email, response);
           var sessionMail = response.data.message.user.email
-         
+
           function userEmail() {
-            sessionStorage.setItem("userEmail", sessionMail);  
+            sessionStorage.setItem("userEmail", sessionMail);
           }
           userEmail()
           this.emailConfirm = response.data.message.description;
           setTimeout(() => {
             this.emailConfirm = false;
-          }, 4500);
-          
-   
-          
+          }, 3500);
+
+
+
 
           var mailconfirmation = setInterval(() => {
-            this.$router.push({ name: "email-confirmation",
-            email: sessionStorage.getItem("userEmail")
+            this.$router.push({
+              name: "email-confirmation",
+              email: sessionStorage.getItem("userEmail")
             });
             clearInterval(mailconfirmation);
-          }, 5000);
+          }, 3000);
           //alert(response.data.message.description)
           // window.location.href = '/login';
           this.response = JSON.stringify(response, null, 2);

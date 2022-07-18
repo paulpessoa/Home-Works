@@ -6,7 +6,7 @@
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>
         </v-text-field>
         
-        <v-btn block x-large type="submit" color="primary" depressed class="justify-center">Send e-mail</v-btn>
+        <v-btn block x-large type="submit" :loading="isLoading" color="primary" depressed class="justify-center">Recuperar</v-btn>
       </v-form>
       
       <v-alert class="mt-7" v-if="emailConfirm" dismissible  type="success">
@@ -14,8 +14,11 @@
       </v-alert>
 
       <v-card-actions class="text-xs-center py-4">
-        <v-btn block x-large color="orange lighten-2" text href="/login"> login </v-btn>
-      </v-card-actions>
+        <v-btn x-large color="orange lighten-2" text to="/register"> Registrar </v-btn>
+      <v-spacer></v-spacer>
+        <v-btn x-large color="orange lighten-2" text href="/login"> login </v-btn>
+      
+      </v-card-actions> 
     </v-card>
   </div>
 
@@ -28,7 +31,7 @@ const url = "https://homeworks-api.vercel.app/account/reset/password";
 export default {
   name: 'ResetPassword',
   data: () => ({
-  
+    isLoading: false,
     email: null,
     emailConfirm: null
 
@@ -39,14 +42,15 @@ export default {
         email: this.email,
         password: this.password,
       }).then(response => {
+        this.isLoading = true
         console.log("DEU CERTO", response);
           this.emailConfirm = "Link de recuperação enviado por e-mail"
         setTimeout(() => {
           this.emailConfirm = false
-        }, 20000);
+        }, 5000);
 
           clearInterval(setTimeout)
-        //this.$router.push({ name: 'login' });
+        this.$router.push({ name: 'login' });
 
         this.response = JSON.stringify(response, null, 2)
       }).catch(error => {
