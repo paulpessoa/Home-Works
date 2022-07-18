@@ -44,7 +44,8 @@ export default {
         password: this.password,
       }).then(response => {
         console.log("DEU CERTO", response);
-          this.emailConfirm = "Você esta logado"
+          this.emailConfirm = "Autenticañáo em andamento..."
+          
 
           var userToken = response.data.accessToken
          
@@ -55,10 +56,10 @@ export default {
 
         setTimeout(() => {
           this.emailConfirm = false
-        }, 45000);
-
+          this.$router.push({ name: 'home' });
+        }, 3000);
           clearTimeout(setTimeout)
-        this.$router.push({ name: 'home' });
+
 
         this.response = JSON.stringify(response, null, 2)
       }).catch(error => {
