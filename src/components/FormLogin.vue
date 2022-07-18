@@ -21,7 +21,8 @@
         <v-btn x-large color="orange lighten-2" text to="/register"> Registrar </v-btn>
       </v-card-actions>
     </v-card>
-    <v-div v-else-if="accessToken = {redirect: { name: '#' }}"></v-div>
+
+    <TableActivities v-else />
   </div>
 
 </template>
@@ -30,47 +31,46 @@
 
 <script>
 import axios from "axios";
+import TableActivities from "@/components/tasks/TableActivities.vue";
 const url = "https://homeworks-api.vercel.app/account/login";
 
 export default {
-  name: 'FormLogin',
+  name: "FormLogin",
   data: () => ({
     isLoading: false,
     showKey: false,
     password: null,
     email: sessionStorage.getItem("userEmail"),
     emailConfirm: null
-
   }),
   methods: {
     userLogin() {
-      this.isLoading = true
+      this.isLoading = true;
       axios.post(url, {
         email: this.email,
         password: this.password,
       }).then(response => {
-        this.emailConfirm = 'Escrever algo aqui...'
+        this.emailConfirm = "Você esta sendo redirecionado...";
         console.log("DEU CERTO", response);
-        var userToken = response.data.accessToken
+        var userToken = response.data.accessToken;
 
         function accessToken() {
           sessionStorage.setItem("accessToken", userToken);
         }
-        accessToken()
-
+        accessToken();
         setTimeout(() => {
-          this.emailConfirm = false
+
           this.$router.push({ name: 'home' });
-        }, 5000);
-        clearTimeout(setTimeout)
-
-
-        this.response = JSON.stringify(response, null, 2)
+          this.emailConfirm = false;
+        }, 3000);
+        clearTimeout(setTimeout);
+        this.response = JSON.stringify(response, null, 2);
       }).catch(error => {
-        this.response = 'Error: ' + error.response
+        this.response = "Error: " + error.response;
         console.log("DEU ERRADO", response);
-      })
+      });
     },
   },
+  components: { TableActivities }
 }
 </script>

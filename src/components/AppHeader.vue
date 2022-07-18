@@ -11,6 +11,7 @@
     </div>
     <v-spacer></v-spacer>
     <v-btn class="mr-2" v-if="accessToken" href="#" text> Configurações </v-btn>
+    <v-btn class="mr-2" v-if="accessToken" href="/new-password" text> Nova senha </v-btn>
     <v-btn class="mr-2 primary--text" v-if="!accessToken" href="/register" color="white"> Cadastro </v-btn>
     <v-btn class="mr-2" v-if="!accessToken" href="/login" outlined> Login </v-btn>
     <v-btn class="mr-2" v-if="accessToken" href="/#" @click="logout()" outlined> Sair </v-btn>
@@ -29,31 +30,11 @@ export default {
     accessToken: sessionStorage.getItem("accessToken"),
   }),
   methods: {
-    logout() {
-      axios.post(url, {
-      email: this.email,
-
-    }).then(response => {
-      this.isLoading = true
-      console.log("DEU CERTO", response);
-
-      function accessToken() {
-        sessionStorage.setItem("accessToken", userToken);
-      }
-      accessToken()
-
-      setTimeout(() => {
-        this.$router.push({ name: 'home' });
-      }, 3000);
-      clearTimeout(setTimeout)
-
-
-      this.response = JSON.stringify(response, null, 2)
-    }).catch(error => {
-      this.response = 'Error: ' + error.response.status
-      console.log("DEU ERRADO", response);
-    })
+    logout() {   
+          sessionStorage.clear();
+          window.location.reload();
+        }
+        
   },
-}
 }
 </script>

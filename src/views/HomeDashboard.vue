@@ -1,7 +1,7 @@
 <template>
   <div>
   <div v-if="accessToken">
-      <TaskTable/>      
+      <TableActivities/>      
     <div v-if="null">
       <p> cadastrar atividade </p>
       <TaskRegister/>
@@ -15,7 +15,7 @@
 
   </div>
   
-  <FormLogin v-else/>
+  <FormLogin v-else-if="!accessToken"/>
   
 
   </div>
@@ -32,16 +32,16 @@
   import TaskDone from "@/components/tasks/TaskDone.vue"
   import SubjectRegister from "@/components/tasks/SubjectRegister.vue"
   import FormLogin from "@/components/FormLogin.vue"
-  import TaskTable from "@/components/tasks/TaskTable.vue"
+  import TableActivities from "@/components/tasks/TableActivities.vue"
 
-  export default Vue.extend({
+  export default {
     name: 'HomeDashboard',
     data: () => ({
       accessToken: sessionStorage.getItem("accessToken"),
     }),
   
     components: {
-      TaskTable,
+      TableActivities,
       TaskRegister,
       TaskRemove,
       TaskReport,
@@ -49,5 +49,5 @@
       SubjectRegister,
       FormLogin
     },    
-  })
+  }
 </script>
