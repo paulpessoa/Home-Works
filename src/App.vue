@@ -1,27 +1,18 @@
 <template>
   <v-app>
-     <v-app-bar v-show="!accessToken" app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img alt="Vuetify Logo" class="shrink mr-2" contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png" transition="scale-transition" width="40" />        
-      </div>
-      <v-spacer></v-spacer>
-
-      <v-btn class="mr-2" href="/login" text> Login </v-btn>
-      <v-btn class="mr-2" href="/register" text> Cadastro </v-btn>
-      <v-btn class="mr-2" href="/email-confirmation" text> Verificar Email </v-btn>
-      <v-btn class="mr-2" href="/reset-password" text> Resetar Senha </v-btn>
-      <v-btn class="mr-2" href="/new-password" text> Nova Senha </v-btn>
-    </v-app-bar>
+    <AppHeader/>
     <v-main>
       <router-view />
     </v-main>
+    <AppFooter/>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import FormLogin from "./components/FormLogin.vue";
+import AppFooter from "./components/AppFooter.vue";
+import AppHeader from "./components/AppHeader.vue";
+
 
 export default Vue.extend({
     name: "App",
@@ -29,6 +20,9 @@ export default Vue.extend({
     //
     accessToken: null,
     }),
-    components: { FormLogin }
+    components: { 
+      AppHeader,
+      AppFooter
+    }
 });
 </script>
