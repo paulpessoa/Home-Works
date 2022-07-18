@@ -59,7 +59,7 @@ export default {
         }
         accessToken();
         setTimeout(() => {
-
+          window.location.reload();
           this.$router.push({ name: 'home' });
           this.emailConfirm = false;
         }, 3000);
