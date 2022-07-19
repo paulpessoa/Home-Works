@@ -31,7 +31,7 @@
 <script>
 import axios from "axios";
 import TableActivities from "@/components/tasks/TableActivities.vue";
-const url = "https://homeworks-api.vercel.app/account/login";
+const url = "https://app-homeworks.herokuapp.com/account/login";
 
 export default {
   name: "FormLogin",

@@ -43,7 +43,7 @@
 
 <script>
 import axios from "axios";
-const url = "https://homeworks-api.vercel.app/account/register";
+const url = "https://app-homeworks.herokuapp.com/account/register";
 
 export default {
   name: "FormRegister",

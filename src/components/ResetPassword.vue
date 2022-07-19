@@ -26,7 +26,7 @@
 
 <script>
 import axios from "axios";
-const url = "https://homeworks-api.vercel.app/account/reset/password";
+const url = "https://app-homeworks.herokuapp.com/account/reset/password";
 
 export default {
   name: 'ResetPassword',
