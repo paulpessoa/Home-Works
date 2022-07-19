@@ -15,7 +15,7 @@
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="800px">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                            <v-btn color="#012A4A" dark class="mb-2" v-bind="attrs" v-on="on">
                                 Nova Atividade
                             </v-btn>
                         </template>
@@ -46,10 +46,10 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="close">
+                                <v-btn color="red" text @click="close">
                                     Cancel
                                 </v-btn>
-                                <v-btn color="primary" @click="save">
+                                <v-btn color="#012A4A" dark @click="save">
                                     Salvar
                                 </v-btn>
                             </v-card-actions>
@@ -60,7 +60,7 @@
                             <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+                                <v-btn color="red" text @click="closeDelete">Cancel</v-btn>
                                 <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
@@ -77,7 +77,7 @@
                 </v-icon>
             </template>
             <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize">
+                <v-btn color="#012A4A" @click="initialize">
                     Reset
                 </v-btn>
             </template>

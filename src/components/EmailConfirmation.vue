@@ -6,7 +6,7 @@
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>
         </v-text-field>
        
-        <v-btn block x-large type="submit" color="primary" :loading="isLoading" depressed class="justify-center mb-6">Verify</v-btn>
+        <v-btn block x-large type="submit" color="#012A4A" :loading="isLoading" depressed class="justify-center mb-6 white--text">Verify</v-btn>
       </v-form>
       
        <v-alert class="mt-7" v-if="emailConfirm" dismissible  type="success">

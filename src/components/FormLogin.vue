@@ -9,7 +9,7 @@
           :type="showKey ? 'text' : 'password'" label="Password" required persistent-hint outlined
           @click:append="showKey = !showKey">
         </v-text-field>
-        <v-btn block x-large type="submit" color="primary" depressed class="justify-center" :loading="isLoading">Login
+        <v-btn block x-large dark type="submit" color="#012A4A" depressed class="justify-center" :loading="isLoading">Login
         </v-btn>
       </v-form>
       <v-alert class="mt-7" v-if="emailConfirm" dismissible type="success">
@@ -21,7 +21,6 @@
         <v-btn x-large color="orange lighten-2" text to="/register"> Registrar </v-btn>
       </v-card-actions>
     </v-card>
-
     <TableActivities v-else />
   </div>
 
