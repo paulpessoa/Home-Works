@@ -1,10 +1,13 @@
 <template>
   <v-app>
-    <AppHeader/>
+    <AppHeader />
     <v-main style="background: #f0f0f0">
+      <h1 class="text-center mt-10" v-if="!accessToken">Home-Works</h1>
+      <p class="text-center" v-if="!accessToken">Experimente com um <a style="text-decoration:none"
+          href="https://www.mohmal.com/pt/" target="_blank" rel="noopener noreferrer">e-mail temporário!</a></p>
       <router-view />
     </v-main>
-    <AppFooter/>
+    <AppFooter />
   </v-app>
 </template>
 
@@ -15,14 +18,14 @@ import AppHeader from "./components/AppHeader.vue";
 
 
 export default Vue.extend({
-    name: "App",
-    data: () => ({
+  name: "App",
+  data: () => ({
     //
-    accessToken: null,
-    }),
-    components: { 
-      AppHeader,
-      AppFooter
-    }
+  accessToken: sessionStorage.getItem("accessToken"),
+  }),
+  components: {
+    AppHeader,
+    AppFooter
+  }
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card v-if="!accesToken" outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
-      <v-card-title class="justify-center mb-2">Login</v-card-title>
+      <v-card-title class="justify-center my-4">AUTENTICAÇÃO</v-card-title>
       <v-form @submit.prevent="userLogin">
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>
         </v-text-field>
@@ -18,7 +18,7 @@
       <v-card-actions class="text-xs-center py-4">
         <v-btn x-large color="orange lighten-2" text to="/reset-password"> Recuperar senha </v-btn>
         <v-spacer></v-spacer>
-        <v-btn x-large color="orange lighten-2" text to="/register"> Registrar </v-btn>
+        <v-btn x-large color="orange lighten-2" text to="/register"> CADASTRO </v-btn>
       </v-card-actions>
     </v-card>
     <TableActivities v-else />
@@ -36,6 +36,7 @@ const url = "https://homeworks-api.vercel.app/account/login";
 export default {
   name: "FormLogin",
   data: () => ({
+    accesToken: null,
     isLoading: false,
     showKey: false,
     password: null,
@@ -44,12 +45,12 @@ export default {
   }),
   methods: {
     userLogin() {
-      this.isLoading = true;
       axios.post(url, {
         email: this.email,
         password: this.password,
       }).then(response => {
-        this.emailConfirm = "Você esta sendo redirecionado..."
+        this.isLoading = true;
+        this.emailConfirm = "User authentication succeeded"
         console.log(response.config.data)
         var userToken = response.data.accessToken
         var sessionMail = this.email
@@ -60,9 +61,8 @@ export default {
         }
         accessToken();
         setTimeout(() => {
-          window.location.reload();
-          this.$router.push({ name: 'home' });
           this.emailConfirm = false;
+          location.reload();
         }, 3000);
         clearTimeout(setTimeout);
         this.response = JSON.stringify(response, null, 2);

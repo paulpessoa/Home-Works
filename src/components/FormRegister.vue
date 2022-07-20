@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
-      <v-card-title class="justify-center mb-2">Crie sua conta</v-card-title>
+      <v-card-title class="justify-center my-4">NOVO CADASTRO</v-card-title>
 
       <v-form ref="form" @submit.prevent="createUser">
         <v-text-field v-model="firstName" :rules="nameRules" filled type="text" label="Nome" required persistent-hint
@@ -16,7 +16,7 @@
         <v-text-field v-model="password" filled :append-icon="showKey1 ? 'mdi-eye' : 'mdi-eye-off'"
           :type="showKey1 ? 'text' : 'password'" label="Senha" required outlined :rules="passwordRules"
           @click:append="showKey1 = !showKey1"></v-text-field>
-        <v-text-field v-if="none" v-model="confirmPassword" filled :append-icon="showKey2 ? 'mdi-eye' : 'mdi-eye-off'"
+        <v-text-field v-if="1>2" v-model="confirmPassword" filled :append-icon="showKey2 ? 'mdi-eye' : 'mdi-eye-off'"
           :disabled="!password" :type="showKey2 ? 'text' : 'password'" label="Confirm Password" required outlined
           counter :rules="[passwordConfirmationRule]" @click:append="showKey2 = !showKey2"></v-text-field>
 
@@ -33,7 +33,7 @@
           Recuperar senha
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn  x-large color="orange lighten-2" text href="/login">
+        <v-btn x-large color="orange lighten-2" text href="/login">
           login
         </v-btn>
       </v-card-actions>
@@ -43,7 +43,8 @@
 
 <script>
 import axios from "axios";
-const url = "https://homeworks-api.vercel.app/account/register";
+const urlRegister = "https://homeworks-api.vercel.app/account/register"
+const urlConfirm = "https://homeworks-api.vercel.app/account/confirm"
 
 export default {
   name: "FormRegister",
@@ -55,7 +56,7 @@ export default {
     firstName: null,
     lastName: null,
     email: null,
-    password: "",
+    password: null,
     confirmPassword: null,
     nameRules: [(v) => !!v || "Preencha este campo"],
     emailRules: [(v) => /.+@.+\..+/.test(v) || "Informe um e-mail válido"],
@@ -65,52 +66,54 @@ export default {
   }),
   methods: {
     createUser() {
-      this.isLoading = true
       axios
-        .post(url, {
+        .post(urlRegister, {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,
           password: this.password,
         })
         .then((response) => {
-          console.log("DEU CERTO", response.data.message.user.email, response);
-          var firstName = this.firstName
+          this.isLoading = true
+          // ------ ENVIA CONFIRMAÇÂO PARA O E-MAIL ------- //
+          axios.post(urlConfirm, {
+            email: this.email,
+          }).then(response => {
+            this.response = JSON.stringify(response, null, 2)
+          }).catch(error => {
+            this.response = error
+            console.log("ERRO-CONFIRMAÇÃO", error);
+          })
+          // ------ ENVIA CONFIRMAÇÂO PARA O E-MAIL ------- //
+
+          console.log("USUARIO CRIADO", response);
           var sessionMail = this.email
           function userEmail() {
             sessionStorage.setItem("userEmail", sessionMail);
             sessionStorage.setItem("userName", response.data.message.user.firstName);
           }
           userEmail()
-          
           this.emailConfirm = response.data.message.description;
           setTimeout(() => {
             this.emailConfirm = false;
-          }, 3500);
-
-
-
-
-          var mailconfirmation = setInterval(() => {
             this.$router.push({
               name: "email-confirmation",
               email: sessionStorage.getItem("userEmail")
             });
-            clearInterval(mailconfirmation);
-          }, 3000);
-          //alert(response.data.message.description)
-          // window.location.href = '/login';
+          }, 3500);
+          // var mailconfirmation = setInterval(() => {
+          //   clearInterval(mailconfirmation);
+          // }, 3000);
           this.response = JSON.stringify(response, null, 2);
         })
         .catch((error) => {
           this.response = "Error: " + error;
-          console.log("DEU ERRADO", error);
-          console.log("ERRADO", error.response.data.error.message);
+          console.log("ERROU CRIAÇÃO", error);
           this.emailConfirm = error.response.data.error.message;
-           this.isLoading = false
-          
+          this.isLoading = false
         });
     },
+
   },
   computed: {
     passwordConfirmationRule() {

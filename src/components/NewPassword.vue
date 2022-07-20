@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
-      <v-card-title class="justify-center mb-2">New Password</v-card-title>
+      <v-card-title class="justify-center my-4">NOVO PASSWORD</v-card-title>
       <v-form ref="form">
         <v-text-field filled :append-icon="showKey1 ? 'mdi-eye' : 'mdi-eye-off'" :type="showKey1 ? 'text' : 'password'"
           label="New Password" required outlined @click:append="showKey1 = !showKey1">

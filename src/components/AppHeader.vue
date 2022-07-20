@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="#012A4A" dark>
+  <v-app-bar v-if="accessToken" app color="#012A4A" dark>
     <div class="d-flex align-center">
     <a href="/" style="text-decoration: none; color: white">
     <h1 class="mr-2" href="/" text> Home-Works </h1>
@@ -8,7 +8,7 @@
     </div>
     <v-spacer></v-spacer>
     <span class="mr-2" v-if="accessToken" href="#" text> Olá {{userName}}! </span>
-    <v-btn class="mr-2" v-if="accessToken" href="#" text> menu </v-btn>
+    
     <v-btn class="mr-2" v-if="accessToken" href="/#" @click="logout()" text> Sair </v-btn>
   </v-app-bar>
 
