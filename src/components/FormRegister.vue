@@ -43,7 +43,7 @@
 
 <script>
 import axios from "axios";
-const url = "https://app-homeworks.herokuapp.com/account/register";
+const url = "https://homeworks-api.vercel.app/account/register";
 
 export default {
   name: "FormRegister",
@@ -75,12 +75,14 @@ export default {
         })
         .then((response) => {
           console.log("DEU CERTO", response.data.message.user.email, response);
-          var sessionMail = response.data.message.user.email
-
+          var firstName = this.firstName
+          var sessionMail = this.email
           function userEmail() {
             sessionStorage.setItem("userEmail", sessionMail);
+            sessionStorage.setItem("userName", response.data.message.user.firstName);
           }
           userEmail()
+          
           this.emailConfirm = response.data.message.description;
           setTimeout(() => {
             this.emailConfirm = false;
@@ -101,8 +103,12 @@ export default {
           this.response = JSON.stringify(response, null, 2);
         })
         .catch((error) => {
-          this.response = "Error: " + error.response.status;
-          console.log("DEU ERRADO", response);
+          this.response = "Error: " + error;
+          console.log("DEU ERRADO", error);
+          console.log("ERRADO", error.response.data.error.message);
+          this.emailConfirm = error.response.data.error.message;
+           this.isLoading = false
+          
         });
     },
   },

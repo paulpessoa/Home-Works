@@ -5,7 +5,10 @@
       <v-form ref="form" @submit.prevent="emailVerify">       
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>
         </v-text-field>
-       
+       <v-otp-input
+  length="6"
+></v-otp-input>
+Ainda não configuramos o OTP
         <v-btn block x-large type="submit" color="#012A4A" :loading="isLoading" depressed class="justify-center mb-6 white--text">Verify</v-btn>
       </v-form>
       
@@ -20,7 +23,7 @@
 
 <script>
 import axios from "axios";
-const url = "https://app-homeworks.herokuapp.com/account/confirm";
+const url = "https://homeworks-api.vercel.app/account/confirm";
 
 export default {
   name: 'EmailConfirmation',

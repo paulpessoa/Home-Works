@@ -26,13 +26,13 @@
 
 <script>
 import axios from "axios";
-const url = "https://app-homeworks.herokuapp.com/account/reset/password";
+const url = "https://homeworks-api.vercel.app/account/reset/password";
 
 export default {
   name: 'ResetPassword',
   data: () => ({
     isLoading: false,
-    email: null,
+    email: sessionStorage.getItem("userEmail"),
     emailConfirm: null
 
   }),
@@ -54,8 +54,10 @@ export default {
 
         this.response = JSON.stringify(response, null, 2)
       }).catch(error => {
-        this.response = 'Error: ' + error.response.status
-        console.log("DEU ERRADO", response); 
+        this.response = 'Error: ' + error
+        console.log("DEU ERRADO", error.response.data.error.message.description)
+        this.emailConfirm = error.response.data.error.message.description
+        this.isLoading = false
       })
     },
   },

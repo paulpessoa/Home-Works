@@ -31,7 +31,7 @@
 <script>
 import axios from "axios";
 import TableActivities from "@/components/tasks/TableActivities.vue";
-const url = "https://app-homeworks.herokuapp.com/account/login";
+const url = "https://homeworks-api.vercel.app/account/login";
 
 export default {
   name: "FormLogin",
@@ -49,12 +49,14 @@ export default {
         email: this.email,
         password: this.password,
       }).then(response => {
-        this.emailConfirm = "Você esta sendo redirecionado...";
-        console.log("DEU CERTO", response);
-        var userToken = response.data.accessToken;
+        this.emailConfirm = "Você esta sendo redirecionado..."
+        console.log(response.config.data)
+        var userToken = response.data.accessToken
+        var sessionMail = this.email
 
         function accessToken() {
-          sessionStorage.setItem("accessToken", userToken);
+          sessionStorage.setItem("userEmail", sessionMail)
+          sessionStorage.setItem("accessToken", userToken)
         }
         accessToken();
         setTimeout(() => {
@@ -65,8 +67,10 @@ export default {
         clearTimeout(setTimeout);
         this.response = JSON.stringify(response, null, 2);
       }).catch(error => {
-        this.response = "Error: " + error.response;
-        console.log("DEU ERRADO", response);
+        this.response = "Error: " + error;
+        console.log("ERRO", error.response.data.error.message.description);
+        this.emailConfirm = error.response.data.error.message.description;
+        this.isLoading = false
       });
     },
   },
