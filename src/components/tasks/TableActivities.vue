@@ -1,19 +1,47 @@
 <template>
     <v-container>
-    
-        <v-data-table :headers="headers" :items="desserts" :items-per-page="itemsPerPage" sort-by="name" class="elevation-1">
-<template v-slot:[`item.check`]="{ item }">
-        <v-simple-checkbox
-          v-model="item.check"
-        ></v-simple-checkbox>
-      </template>
+        <v-card class="my-8" elevation="0">
+                <v-card-title>
+                    <span class="text-h5">{{ formTitle }}</span>
+                </v-card-title>
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12" sm="6" md="4" lg="4">
+                                <v-text-field outlined dense hide-details v-model="editedItem.name" label="Atividade"></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4" lg="2">
+                                <v-select outlined dense hide-details v-model="editedItem.calories" :items="disciplinas" label="Filled style"></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4" lg="2">
+                                   <v-select outlined dense hide-details v-model="editedItem.fat" :items="status" label="Situação"></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4" lg="2">
+                                <v-text-field type="date" outlined dense hide-details v-model="editedItem.carbs" label="Data de Entrega"></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4" lg="2">
+                                <v-btn block dark @click="save"> Adicionar </v-btn>
+                            </v-col>
+
+                        </v-row>
+                    </v-container>
+                </v-card-text>
+
+              
+
+        </v-card>
+
+        <v-data-table :headers="headers" :items="desserts" :items-per-page="itemsPerPage" sort-by="name"
+            class="elevation-1">
+            <template v-slot:[`item.check`]="{ item }">
+                <v-simple-checkbox v-model="item.check"></v-simple-checkbox>
+            </template>
 
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>Minhas Atividades</v-toolbar-title>
-                    
+
                     <v-spacer></v-spacer>
-                    <v-dialog v-model="dialog" max-width="800px">
+                    <v-dialog v-model="dialog" max-width="80%">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn color="#012A4A" dark class="mb-2" v-bind="attrs" v-on="on">
                                 Nova Atividade
@@ -28,16 +56,18 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" sm="6" md="4" lg="3">
-                                            <v-text-field outlined dense hide-details v-model="editedItem.name" label="Atividade"></v-text-field>
+                                            <v-text-field outlined dense hide-details v-model="editedItem.name"
+                                                label="Atividade"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="3">
-                                            <v-text-field outlined dense hide-details v-model="editedItem.calories" label="Disciplina"></v-text-field>
+                                            <v-select outlined dense hide-details v-model="editedItem.calories" :items="disciplinas" label="Disciplinas"></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="3">
-                                            <v-text-field outlined dense hide-details v-model="editedItem.fat" label="Situação"></v-text-field>
+                                            <v-select outlined dense hide-details v-model="editedItem.fat" :items="status" label="Situação"></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="3">
-                                            <v-text-field outlined dense hide-details v-model="editedItem.carbs" label="Data de Entrega"></v-text-field>
+                                            <v-text-field type="date" outlined dense hide-details v-model="editedItem.carbs"
+                                                label="Data de Entrega"></v-text-field>
                                         </v-col>
 
                                     </v-row>
@@ -69,12 +99,16 @@
                 </v-toolbar>
             </template>
             <template v-slot:[`item.actions`]="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item)">
+                <v-icon small color="orange" class="mr-2" @click="editItem(item)">
                     mdi-pencil
                 </v-icon>
-                <v-icon small @click="deleteItem(item)">
+                <v-icon small color="red" class="mr-2" @click="deleteItem(item)">
                     mdi-delete
                 </v-icon>
+                <v-icon small color="" @click="checkItem(item)">
+                    mdi-checkbox-marked
+                </v-icon>
+
             </template>
             <template v-slot:no-data>
                 <v-btn color="#012A4A" @click="initialize">
@@ -97,13 +131,14 @@ export default {
         dialog: false,
         dialogDelete: false,
         headers: [
-            { text:'', align: 'center', value: 'check', sortable: false },
-            { text: 'Atividade', align: 'start', value: 'name'},
+            { text: 'Atividade', align: 'start', value: 'name' },
             { text: 'Disciplina', align: 'center', value: 'calories' },
             { text: 'Situação', align: 'center', value: 'fat' },
             { text: 'Data de Entrega', align: 'center', value: 'carbs' },
-            { text: 'Ações', value: 'actions', sortable: false },
+            { text: 'Ações', align: 'center', value: 'actions', sortable: false },
         ],
+        disciplinas: ['Português', 'Matemática', 'História', 'Geografia'],
+        status: ['Finalizado', 'Atrasado', 'Em andamento', 'Adiantado', 'Agendado'],
         desserts: [],
         itemsPerPage: 5,
         editedIndex: -1,
@@ -147,101 +182,73 @@ export default {
                     check: null,
                     name: 'Escrever Redação',
                     calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '05-12-2022',
+                    fat: 'Planejado',
+                    carbs: '2022-05-06',
+                },
+                {
+                    check: null,
+                    name: 'Escrever Redação',
+                    calories: 'Português',
+                    fat: 'Agendado',
+                    carbs: '05-10-2022',
+                },
+                {
+                    check: null,
+                    name: 'Escrever Redação',
+                    calories: 'Português',
+                    fat: 'Finalizado',
+                    carbs: '2022-05-06',
                 },
                 {
                     check: null,
                     name: 'Escrever Redação',
                     calories: 'Português',
                     fat: 'Atrasado',
-                    carbs: '05-12-2022',
+                    carbs: '2022-05-06',
                 },
                 {
                     check: null,
                     name: 'Escrever Redação',
                     calories: 'Português',
                     fat: 'Atrasado',
-                    carbs: '05-12-2022',
+                    carbs: '2022-05-06',
                 },
                 {
                     check: null,
                     name: 'Escrever Redação',
                     calories: 'Português',
                     fat: 'Atrasado',
-                    carbs: '05-12-2022',
+                    carbs: '2022-05-06',
                 },
                 {
                     check: null,
                     name: 'Escrever Redação',
                     calories: 'Português',
                     fat: 'Atrasado',
-                    carbs: '05-12-2022',
+                    carbs: '2022-05-06',
                 },
                 {
                     check: null,
                     name: 'Escrever Redação',
                     calories: 'Português',
                     fat: 'Atrasado',
-                    carbs: '05-12-2022',
+                    carbs: '2022-05-06',
                 },
                 {
                     check: null,
                     name: 'Escrever Redação',
                     calories: 'Português',
                     fat: 'Atrasado',
-                    carbs: '05-12-2022',
+                    carbs: '2022-05-06',
                 },
                 {
                     check: null,
                     name: 'Escrever Redação',
                     calories: 'Português',
                     fat: 'Atrasado',
-                    carbs: '05-12-2022',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '05-12-2022',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '05-12-2022',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '05-12-2022',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '05-12-2022',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '05-12-2022',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '05-12-2022',
+                    carbs: '2022-05-06',
                 }
-                
+
             ]
         },
 

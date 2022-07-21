@@ -1,7 +1,6 @@
 <template>
-    <v-footer v-if="accessToken" padless color="#012A4A">
+    <v-footer padless color="#012A4A">
         <v-col class="text-center white--text" cols="12">
-
 
             <v-tooltip top v-for="(i, index) in authors" :key="index" class="mx-10 white--text">
                 <template v-slot:activator="{ on, attrs }">
