@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-card outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
+  <div class="pa-6">
+    <v-card elevation="0" class="mx-auto px-8 py-2" max-width="460">
       <v-card-title class="justify-center my-4">RECUPERAÇÃO DE CONTA</v-card-title>
       <v-form ref="form" @submit.prevent="resetPassword">
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>

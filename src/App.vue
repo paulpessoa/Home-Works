@@ -2,7 +2,11 @@
   <v-app>
     <AppHeader />
     <v-main style="background: #f0f0f0">
-      <h1 class="text-center mt-10" v-if="!accessToken">Home-Works</h1>
+
+      <a v-if="!accessToken" href="/" style="text-decoration: none; color: #012a4a">
+        <h1 class="text-center mt-10" href="/" text> Home-Works </h1>
+      </a>
+
       <p class="text-center" v-if="!accessToken">Experimente com um <a style="text-decoration:none"
           href="https://www.mohmal.com/pt/" target="_blank" rel="noopener noreferrer">e-mail temporário!</a></p>
       <router-view />
@@ -21,7 +25,7 @@ export default Vue.extend({
   name: "App",
   data: () => ({
     //
-  accessToken: sessionStorage.getItem("accessToken"),
+    accessToken: sessionStorage.getItem("accessToken"),
   }),
   components: {
     AppHeader,

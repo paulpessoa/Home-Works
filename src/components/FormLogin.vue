@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-card v-if="!accesToken" outlined class="mx-auto mt-10 px-8 py-2" max-width="460">
+ <div class="pa-6">
+    <v-card elevation="0" v-if="!accessToken" class="mx-auto px-8 py-2" max-width="460">
       <v-card-title class="justify-center my-4">AUTENTICAÇÃO</v-card-title>
       <v-form @submit.prevent="userLogin">
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>
@@ -36,7 +36,7 @@ const url = "https://homeworks-api.vercel.app/account/login";
 export default {
   name: "FormLogin",
   data: () => ({
-    accesToken: null,
+    accessToken: sessionStorage.getItem("accessToken"),
     isLoading: false,
     showKey: false,
     password: null,
@@ -61,14 +61,14 @@ export default {
         }
         accessToken();
         setTimeout(() => {
+          window.location.reload();
           this.emailConfirm = false;
-          location.reload();
         }, 3000);
         clearTimeout(setTimeout);
         this.response = JSON.stringify(response, null, 2);
       }).catch(error => {
         this.response = "Error: " + error;
-        console.log("ERRO", error.response.data.error.message.description);
+        console.log("ERRO", error);
         this.emailConfirm = error.response.data.error.message.description;
         this.isLoading = false
       });
