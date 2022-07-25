@@ -1,52 +1,69 @@
 <template>
     <v-container>
         <v-card class="my-8" elevation="0">
-                <v-card-title>
-                    <span class="text-h5">{{ formTitle }}</span>
-                </v-card-title>
-                    <v-container>
-                        <v-row>
-                            <v-col cols="12" sm="6" md="4" lg="4">
-                                <v-text-field outlined dense hide-details v-model="editedItem.name" label="Atividade"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4" lg="2">
-                                <v-select outlined dense hide-details v-model="editedItem.calories" :items="disciplinas" label="Filled style"></v-select>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4" lg="2">
-                                   <v-select outlined dense hide-details v-model="editedItem.fat" :items="status" label="Situação"></v-select>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4" lg="2">
-                                <v-text-field type="date" outlined dense hide-details v-model="editedItem.carbs" label="Data de Entrega"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4" lg="2">
-                                <v-btn block dark @click="save"> Adicionar </v-btn>
-                            </v-col>
+            <v-card-title>
+                <v-toolbar-title class="text-h5">{{ formTitle }}</v-toolbar-title>
 
-                        </v-row>
-                    </v-container>
-                </v-card-text>
+                <v-spacer></v-spacer>
+                <SubjectRegister/>
+            </v-card-title>
+            <v-container>
+            <v-form ref="form" @submit.prevent="createUser">
+                <v-row>
+                
+                    <v-col cols="12" sm="6" md="4" lg="4">
+                        <v-text-field outlined dense hide-details clearable v-model="editedItem.name" label="Título da Atividade">
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4" lg="3">
+                        <v-select outlined dense hide-details v-model="editedItem.subjects" clearable :items="subjectList" item-text="name"
+                            label="Selecionar Disciplina">
+                            
+<template v-slot:no-data>
+        <v-list-item>
+            Cadastre uma disciplina 
+        </v-list-item>
+      </template>
 
-              
+                            </v-select>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4" lg="3">
+                        <v-text-field type="date" outlined dense clearable hide-details v-model="editedItem.date"
+                            label="Data de Entrega"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4" lg="2">
+                  <v-btn color="#012a4a" class="py-5 white--text" block @click="save" :disabled="!editedItem.name || !editedItem.subjects || !editedItem.date">
+                        <v-icon small color="orange" class="mr-2">
+                            mdi-file-plus
+                        </v-icon>
+                        Adicionar
+                    </v-btn>                    
+                </v-col>
+
+                </v-row>
+                </v-form>
+            </v-container>
 
         </v-card>
 
-        <v-data-table :headers="headers" :items="desserts" :items-per-page="itemsPerPage" sort-by="name"
-            class="elevation-1">
+        <v-data-table :headers="headers" :items="subjects" :items-per-page="itemsPerPage" sort-by="name"   hide-default-footer
+            class="rounded" :loading="isLoading" loading-text="Loading... Please wait">
             <template v-slot:[`item.check`]="{ item }">
                 <v-simple-checkbox v-model="item.check"></v-simple-checkbox>
             </template>
 
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Minhas Atividades</v-toolbar-title>
-
+                    <v-toolbar-title class="text-h5">Minhas Atividades</v-toolbar-title>
                     <v-spacer></v-spacer>
+                    <v-btn color="#012A4A" dark  class="mb-2">
+                        <v-icon small color="orange" class="mr-2">
+                            mdi-file-chart
+                        </v-icon>
+                        Gerar Relatório
+                    </v-btn>
                     <v-dialog v-model="dialog" max-width="80%">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn color="#012A4A" dark class="mb-2" v-bind="attrs" v-on="on">
-                                Nova Atividade
-                            </v-btn>
-                        </template>
+
                         <v-card>
                             <v-card-title>
                                 <span class="text-h5">{{ formTitle }}</span>
@@ -55,19 +72,17 @@
                             <v-card-text>
                                 <v-container>
                                     <v-row>
-                                        <v-col cols="12" sm="6" md="4" lg="3">
+                                        <v-col cols="12" sm="6" md="4" lg="6">
                                             <v-text-field outlined dense hide-details v-model="editedItem.name"
                                                 label="Atividade"></v-text-field>
                                         </v-col>
-                                        <v-col cols="12" sm="6" md="4" lg="3">
-                                            <v-select outlined dense hide-details v-model="editedItem.calories" :items="disciplinas" label="Disciplinas"></v-select>
+                                        <v-col cols="12" sm="6" md="4" lg="4">
+                                            <v-select outlined dense hide-details v-model="editedItem.subjects" :items="subjectList" item-text="name" label="Disciplinas"></v-select>
                                         </v-col>
-                                        <v-col cols="12" sm="6" md="4" lg="3">
-                                            <v-select outlined dense hide-details v-model="editedItem.fat" :items="status" label="Situação"></v-select>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="4" lg="3">
-                                            <v-text-field type="date" outlined dense hide-details v-model="editedItem.carbs"
-                                                label="Data de Entrega"></v-text-field>
+                                        
+                                        <v-col cols="12" sm="6" md="4" lg="2">
+                                            <v-text-field type="date" outlined dense hide-details
+                                                v-model="editedItem.date" label="Data de Entrega"></v-text-field>
                                         </v-col>
 
                                     </v-row>
@@ -75,6 +90,9 @@
                             </v-card-text>
 
                             <v-card-actions>
+                                <v-btn color="red" outlined @click="deleteItemConfirm">
+                                    Excluir
+                                </v-btn>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" text @click="close">
                                     Cancel
@@ -85,36 +103,37 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
+
                     <v-dialog v-model="dialogDelete" max-width="300px">
                         <v-card>
-                            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+                            <v-card-title>Are you sure you want to delete this item?</v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" text @click="closeDelete">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                                <v-btn color="blue darken-1" text @click="deleteItemConfirm && close">OK</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
+
                 </v-toolbar>
             </template>
-            <template v-slot:[`item.actions`]="{ item }">
-                <v-icon small color="orange" class="mr-2" @click="editItem(item)">
+                            
+<template v-slot:[`item.actions`]="{ item }">
+            <v-row>
+            
+            
+            <v-icon small color="orange" class="mr-2" @click="editItem(item)">
                     mdi-pencil
                 </v-icon>
                 <v-icon small color="red" class="mr-2" @click="deleteItem(item)">
                     mdi-delete
                 </v-icon>
-                <v-icon small color="" @click="checkItem(item)">
-                    mdi-checkbox-marked
-                </v-icon>
+                <v-simple-checkbox v-model="item.check"></v-simple-checkbox>
+            </v-row>
+            
+            </template>
 
-            </template>
-            <template v-slot:no-data>
-                <v-btn color="#012A4A" @click="initialize">
-                    Reset
-                </v-btn>
-            </template>
         </v-data-table>
     </v-container>
 </template>
@@ -125,38 +144,66 @@
 
 
 <script>
+import axios from "axios";
+const URL_TASKS = 'http://localhost:3000/tasks'
+const URL_SUBJECTS = 'http://localhost:3000/subjects'
+
+import SubjectRegister from "./SubjectRegister.vue";
+
 export default {
     name: 'TableTask',
     data: () => ({
+        date: new Date(),
         dialog: false,
         dialogDelete: false,
+        isLoading: false,
         headers: [
+            { text: '', align: 'center', value: 'check' },
             { text: 'Atividade', align: 'start', value: 'name' },
-            { text: 'Disciplina', align: 'center', value: 'calories' },
-            { text: 'Situação', align: 'center', value: 'fat' },
-            { text: 'Data de Entrega', align: 'center', value: 'carbs' },
+            { text: 'Disciplina', align: 'center', value: 'subjects' },
+            { text: 'Situação', align: 'center', value: 'status' },
+            { text: 'Data de Entrega', align: 'center', value: 'date' },
             { text: 'Ações', align: 'center', value: 'actions', sortable: false },
         ],
-        disciplinas: ['Português', 'Matemática', 'História', 'Geografia'],
+        subjectList: '',
         status: ['Finalizado', 'Atrasado', 'Em andamento', 'Adiantado', 'Agendado'],
-        desserts: [],
+        subjects: [],
         itemsPerPage: 5,
         editedIndex: -1,
         editedItem: {
             name: '',
-            calories: null,
-            fat: null,
-            carbs: null
+            subjects: null,
+            status: null,
+            date: null
         },
         defaultItem: {
             name: '',
-            calories: null,
-            fat: null,
-            carbs: null
+            subjects: null,
+            status: null,
+            date: null
         },
     }),
-
+    components: {
+        SubjectRegister
+    },
     computed: {
+        currentStatus() {
+            if ( date <= 100) {
+                this.date = "FINALIZADO"
+            }
+            else if (task.check = true) {
+                this.date = "EEM dia"
+            }
+            else{
+                this.date = "AAtrasado"
+                
+            }
+
+        },
+
+
+
+
         formTitle() {
             return this.editedIndex === -1 ? 'Nova Atividade' : 'Editar Atividade'
         },
@@ -170,103 +217,51 @@ export default {
             val || this.closeDelete()
         },
     },
-
     created() {
-        this.initialize()
+        this.getListTasks()
+        this.listSubjects()
     },
 
     methods: {
-        initialize() {
-            this.desserts = [
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Planejado',
-                    carbs: '2022-05-06',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Agendado',
-                    carbs: '05-10-2022',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Finalizado',
-                    carbs: '2022-05-06',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '2022-05-06',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '2022-05-06',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '2022-05-06',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '2022-05-06',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '2022-05-06',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '2022-05-06',
-                },
-                {
-                    check: null,
-                    name: 'Escrever Redação',
-                    calories: 'Português',
-                    fat: 'Atrasado',
-                    carbs: '2022-05-06',
-                }
-
-            ]
+        listSubjects() {
+            this.isLoading = true
+      axios.get(URL_SUBJECTS, {
+          }).then(response => {
+              this.subjectList = response.data
+        console.log("LISTOU", response);
+      }).catch(error => {
+          //                console.log("DEU ERRADO", error)
+      }).finally(() => (this.isLoading = false))
+    },
+        // Função consumir (GET) lista de tarefas da API
+        getListTasks() {
+            this.isLoading = true
+            axios.get(URL_TASKS, {
+                }).then(response => {
+                this.subjects = response.data
+                console.log("DEU CERTO", response);
+                this.response = JSON.stringify(response, null, 2)
+            }).catch(error => {
+                console.log("DEU ERRADO", error)
+            }).finally(() => (this.isLoading = false))
         },
 
         editItem(item) {
-            this.editedIndex = this.desserts.indexOf(item)
+            this.editedIndex = this.subjects.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialog = true
         },
 
         deleteItem(item) {
-            this.editedIndex = this.desserts.indexOf(item)
+            this.editedIndex = this.subjects.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialogDelete = true
         },
 
         deleteItemConfirm() {
-            this.desserts.splice(this.editedIndex, 1)
+            this.subjects.splice(this.editedIndex, 1)
             this.closeDelete()
+            this.close()
         },
 
         close() {
@@ -287,12 +282,12 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-                Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                Object.assign(this.subjects[this.editedIndex], this.editedItem)
             } else {
-                this.desserts.push(this.editedItem)
+                this.subjects.push(this.editedItem)
             }
             this.close()
         },
-    },
+    }
 }
 </script>

@@ -1,0 +1,48 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "tasks": [
+    {
+      "check": true,
+      "name": "A Redação",
+      "subjects": "Português",
+      "status": "Planejado",
+      "date": "2022-05-06"
+    },
+    {
+      "check": false,
+      "name": "B Redação",
+      "subjects": "Português",
+      "status": "Agendado",
+      "date": "05-10-2022"
+    },
+    {
+      "check": null,
+      "name": "G Redação",
+      "subjects": "Português",
+      "status": "Atrasado",
+      "date": "2022-05-06"
+    }
+  ],
+  "subjects": [
+    {
+      "name": "sdf",
+      "id": 1
+    }
+  ]
+}

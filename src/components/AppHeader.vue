@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="#012A4A" dark>
+  <v-app-bar app color="#012A4A" dark elevation="0">
     <div class="d-flex align-center mx-auto">
       <a href="/" style="text-decoration: none; color: white">
         <h1 class="mr-2" href="/" text> Home-Works </h1>
