@@ -6,7 +6,7 @@
       </a>
     </div>
     <v-spacer v-if="accessToken"></v-spacer>
-    <span class="mr-2" v-if="accessToken" href="#" text> Olá {{ userName }}! </span>
+    <span class="mr-2" v-if="accessToken" href="#" text> Oi {{ userName }} </span>
     <v-menu v-if="accessToken" left bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">

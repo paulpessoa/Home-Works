@@ -58,6 +58,7 @@ export default {
         function accessToken() {
           sessionStorage.setItem("userEmail", sessionMail)
           sessionStorage.setItem("accessToken", userToken)
+          sessionStorage.setItem("userName", response.data.firstName);
         }
         accessToken();
         setTimeout(() => {
