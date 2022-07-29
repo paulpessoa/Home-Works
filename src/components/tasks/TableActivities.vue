@@ -49,9 +49,14 @@
 
         <v-data-table :headers="headers" :items="subjects" :items-per-page="itemsPerPage" sort-by="name"
             hide-default-footer class="rounded" :loading="isLoading" loading-text="Loading... Please wait">
+<!--
             <template v-slot:[`item.check`]="{ item }">
+            
                 <v-simple-checkbox v-model="item.check"></v-simple-checkbox>
+            
             </template>
+-->           
+
 
             <template v-slot:top>
                 <v-toolbar flat>
@@ -112,7 +117,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" text @click="closeDelete">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm && close">OK</v-btn>
+                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -123,15 +128,12 @@
 
             <template v-slot:[`item.actions`]="{ item }">
                 <v-row>
-
-
                     <v-icon small color="orange" class="mr-2" @click="editItem(item)">
                         mdi-pencil
                     </v-icon>
                     <v-icon small color="red" class="mr-2" @click="deleteItem(item)">
                         mdi-delete
                     </v-icon>
-                    <v-simple-checkbox v-model="item.check"></v-simple-checkbox>
                 </v-row>
 
             </template>
@@ -155,21 +157,22 @@ import SubjectRegister from "./SubjectRegister.vue";
 export default {
     name: 'TableTask',
     data: () => ({
+        items: "",
         date: new Date(),
         dialog: false,
         dialogDelete: false,
         isLoading: false,
         headers: [
-            { text: '', align: 'center', value: 'check' },
+          //  { text: '', align: 'center', value: 'check' },
             { text: 'Atividade', align: 'start', value: 'name' },
             { text: 'Disciplina', align: 'center', value: 'subjects' },
             { text: 'Situação', align: 'center', value: 'status' },
             { text: 'Data de Entrega', align: 'center', value: 'date' },
-            { text: 'Ações', align: 'center', value: 'actions', sortable: false },
+            { text: 'Ações', align: 'left', value: 'actions', sortable: false },
         ],
-        subjectList: '',
-        status: ['Finalizado', 'Atrasado', 'Em andamento', 'Adiantado', 'Agendado'],
         subjects: [],
+        subjectList: [],
+        status: ['Finalizado', 'Atrasado', 'Em andamento', 'Adiantado', 'Agendado'],
         itemsPerPage: 5,
         editedIndex: -1,
         editedItem: {
@@ -198,19 +201,12 @@ export default {
             }
             else {
                 this.date = "AAtrasado"
-
             }
-
         },
-
-
-
-
         formTitle() {
             return this.editedIndex === -1 ? 'Nova Atividade' : 'Editar Atividade'
         },
     },
-
     watch: {
         dialog(val) {
             val || this.close()
@@ -219,18 +215,13 @@ export default {
             val || this.closeDelete()
         },
     },
-    created() {
-        this.getListTasks()
-        this.listSubjects()
-    },
-
     methods: {
         listSubjects() {
             this.isLoading = true
             axios.get(URL_SUBJECTS, {
             }).then(response => {
                 this.subjectList = response.data
-                console.log("LISTOU", response);
+                //console.log("LISTOU", response);
             }).catch(error => {
                 //                console.log("DEU ERRADO", error)
             }).finally(() => (this.isLoading = false))
@@ -241,7 +232,7 @@ export default {
             axios.get(URL_TASKS, {
             }).then(response => {
                 this.subjects = response.data
-                console.log("DEU CERTO", response);
+                //console.log("DEU CERTO", response);
                 this.response = JSON.stringify(response, null, 2)
             }).catch(error => {
                 console.log("DEU ERRADO", error)
@@ -290,6 +281,10 @@ export default {
             }
             this.close()
         },
-    }
+    },
+    created() {
+        this.getListTasks()
+        this.listSubjects()
+    },
 }
 </script>

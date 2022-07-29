@@ -11,5 +11,15 @@ module.exports = defineConfig({
     manifestOptions: {
       background_color: '#012A4A'
     }
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: undefined,
+      fallbackLocale: undefined,
+      localeDir: undefined,
+      enableInSFC: undefined,
+      enableBridge: undefined
+    }
   }
 })

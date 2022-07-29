@@ -55,6 +55,7 @@ export default {
         switchSelect(event) {
             localStorage.setItem('lang', event.target.value)
             console.log("idioma selecionado: ", localStorage.getItem('lang'))
+            //window.location.reload()
         }
     }
 }

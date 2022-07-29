@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       dialogSubject: false,
-      subject: '',
+      subjects: [],
       subjectList: null,
       isLoading: false
     }
@@ -60,9 +60,6 @@ export default {
     dialogSubject(val) {
       val || this.close()
     },
-  },
-  created() {
-    this.listSubjects()
   },
   methods: {
 
@@ -77,7 +74,7 @@ export default {
           this.isLoading = false
           this.dialogSubject = false
         }, 1500);
-        //this.subjects = ''
+        this.subjects = null
         window.location.reload()
       }).catch(error => {
       })
