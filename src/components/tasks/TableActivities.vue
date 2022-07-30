@@ -2,7 +2,7 @@
     <v-container>
         <v-card class="my-8" elevation="0">
             <v-card-title>
-                <v-toolbar-title class="text-h5">{{$t('new_task')}}</v-toolbar-title>
+                <v-toolbar-title class="text-h5">{{ $t('new_task') }}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <SubjectRegister />
             </v-card-title>
@@ -26,7 +26,7 @@
 
                             </v-select>
                         </v-col>
-                        
+
                         <v-col cols="12" sm="6" md="4" lg="3">
                             <v-text-field type="date" outlined dense clearable hide-details v-model="editedItem.date"
                                 :label="$t('delivery_date')"></v-text-field>
@@ -37,7 +37,7 @@
                                 <v-icon small color="orange" class="mr-2">
                                     mdi-file-plus
                                 </v-icon>
-                                {{$t('add')}}
+                                {{ $t('add') }}
                             </v-btn>
                         </v-col>
 
@@ -49,13 +49,13 @@
 
         <v-data-table :headers="headers" :items="tasks" :items-per-page="itemsPerPage" sort-by="name"
             hide-default-footer class="rounded" :loading="isLoading" loading-text="Loading... Please wait">
-<!--
+            <!--
             <template v-slot:[`item.check`]="{ item }">
             
                 <v-simple-checkbox v-model="item.check"></v-simple-checkbox>
             
             </template>
--->           
+-->
 
 
             <template v-slot:top>
@@ -84,7 +84,8 @@
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="4">
                                             <v-select outlined dense hide-details v-model="editedItem.subjects"
-                                                :items="subjectList" item-text="name" :label="$t('subjects')"></v-select>
+                                                :items="subjectList" item-text="name" :label="$t('subjects')">
+                                            </v-select>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4" lg="2">
@@ -99,10 +100,10 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" text @click="close">
-                                    {{$t('cancel')}}
+                                    {{ $t('cancel') }}
                                 </v-btn>
                                 <v-btn color="#6557F5" dark @click="save">
-                                    {{$t('save')}}
+                                    {{ $t('save') }}
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -110,11 +111,12 @@
 
                     <v-dialog v-model="dialogDelete" max-width="400px">
                         <v-card>
-                            <v-card-title class="body-1 justify-center">Are you sure you want to delete this item?</v-card-title>
+                            <v-card-title class="body-1 justify-center">Are you sure you want to delete this item?
+                            </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" text @click="closeDelete">Cancel</v-btn>
-                                <v-btn color="darken-1" dark  @click="deleteItemConfirm">OK</v-btn>
+                                <v-btn color="darken-1" dark @click="deleteItemConfirm">OK</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -160,15 +162,45 @@ export default {
         dialogDelete: false,
         isLoading: false,
         headers: [
-          //  { text: '', align: 'center', value: 'check' },
+            //  { text: '', align: 'center', value: 'check' },
             { text: 'Atividade', align: 'start', value: 'name' },
             { text: 'Disciplina', align: 'center', value: 'subjects' },
             { text: 'Situação', align: 'center', value: 'status' },
             { text: 'Data de Entrega', align: 'center', value: 'date' },
             { text: 'Ações', align: 'left', value: 'actions', sortable: false },
         ],
-        tasks: [],
-        subjects: [],
+        tasks: [
+            {
+                "check": true,
+                "name": "A Redação",
+                "subjects": "Português",
+                "status": "Planejado",
+                "date": "2022-05-06"
+            },
+            {
+                "check": false,
+                "name": "B Redação",
+                "subjects": "Português",
+                "status": "Agendado",
+                "date": "05-10-2022"
+            },
+            {
+                "check": null,
+                "name": "G Redação",
+                "subjects": "Português",
+                "status": "Atrasado",
+                "date": "2022-05-06"
+            }
+        ],
+        subjects: [
+            {
+                "name": "Matematica",
+                "id": 1
+            },
+            {
+                "name": "Português",
+                "id": 2
+            }],
         subjectList: [],
         status: ['Finalizado', 'Atrasado', 'Em andamento', 'Adiantado', 'Agendado'],
         itemsPerPage: 5,
