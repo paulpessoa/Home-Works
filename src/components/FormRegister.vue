@@ -20,7 +20,7 @@
           :disabled="!password" :type="showKey2 ? 'text' : 'password'" label="Confirm Password" required outlined
           counter :rules="[passwordConfirmationRule]" @click:append="showKey2 = !showKey2"></v-text-field>
 
-        <v-btn block x-large type="submit" class="white--text" color="#012A4A" depressed :loading="isLoading"
+        <v-btn block x-large type="submit" class="white--text" color="#6557F5" depressed :loading="isLoading"
           :disabled="!firstName || !password || !email">Cadastrar</v-btn>
       </v-form>
 

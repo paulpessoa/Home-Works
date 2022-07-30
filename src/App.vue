@@ -2,8 +2,8 @@
   <v-app>
     <AppHeader />
     <v-main style="background: #f0f0f0">
-      <p class="text-center mt-10" v-if="!accessToken">Experimente com um <a style="text-decoration:none"
-          href="https://www.mohmal.com/pt/" target="_blank" rel="noopener noreferrer">e-mail temporário!</a></p>
+      <p class="text-center mt-10" v-if="!accessToken">{{$t('try_it_with_a')}}<a style="text-decoration:none"
+          href="https://www.mohmal.com/pt/" target="_blank" rel="noopener noreferrer">{{$t('temporary_email')}}</a></p>
       <router-view />
     </v-main>
     <AppFooter />

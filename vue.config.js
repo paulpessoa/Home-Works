@@ -5,11 +5,11 @@ module.exports = defineConfig({
   ],
 
   pwa: {
-    themeColor: '#012A4A',
+    themeColor: '#6557F5',
     name: 'Home Works',
-    msTileColor: '#012A4A',
+    msTileColor: '#6557F5',
     manifestOptions: {
-      background_color: '#012A4A'
+      background_color: '#6557F5'
     }
   },
 

@@ -5,7 +5,7 @@
       <v-form ref="form" @submit.prevent="emailVerify">
         <v-otp-input type="number" required v-model="otp" length="6">
         </v-otp-input>
-        <v-btn block x-large :disabled="otp.length <= 5" type="submit" color="#012A4A" :loading="isLoading" 
+        <v-btn block x-large :disabled="otp.length <= 5" type="submit" color="#6557F5" :loading="isLoading" 
           class="justify-center mb-6 white--text">Verify</v-btn>
       </v-form>
       <v-alert class="mt-7" v-if="emailConfirm" dismissible type="success">

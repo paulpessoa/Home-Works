@@ -9,7 +9,7 @@
         <v-text-field filled :append-icon="showKey2 ? 'mdi-eye' : 'mdi-eye-off'" :type="showKey2 ? 'text' : 'password'"
           label="Password Confirm" required persistent-hint outlined @click:append="showKey2 = !showKey2">
         </v-text-field>
-        <v-btn block x-large type="submit" color="#012a4a" depressed class="justify-center white--text">CONFIRM</v-btn>
+        <v-btn block x-large type="submit" color="#6557F5" depressed class="justify-center white--text">CONFIRM</v-btn>
       </v-form>
       <v-card-actions class="text-xs-center py-4">
         <v-btn block x-large color="orange lighten-2" text href="/home"> CANCEL </v-btn>

@@ -6,7 +6,7 @@
         <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>
         </v-text-field>
         
-        <v-btn block x-large type="submit" :loading="isLoading" color="#012A4A" depressed class="justify-center white--text">RESETAR SENHA</v-btn>
+        <v-btn block x-large type="submit" :loading="isLoading" color="#6557F5" depressed class="justify-center white--text">RESETAR SENHA</v-btn>
       </v-form>
       
       <v-alert class="mt-7" v-if="emailConfirm" dismissible  type="success">

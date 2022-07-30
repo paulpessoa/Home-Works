@@ -1,24 +1,24 @@
 <template>
  <div class="pa-6">
     <v-card elevation="0" v-if="!accessToken" class="mx-auto px-8 py-2" max-width="460">
-      <v-card-title class="justify-center my-4">AUTENTICAÇÃO</v-card-title>
+      <v-card-title class="justify-center my-4">{{$t('access')}}</v-card-title>
       <v-form @submit.prevent="userLogin">
-        <v-text-field v-model="email" filled type="mail" label="E-mail" required persistent-hint outlined>
+        <v-text-field v-model="email" filled type="mail" :label="$t('email')" required persistent-hint outlined>
         </v-text-field>
         <v-text-field v-model="password" filled :append-icon="showKey ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="showKey ? 'text' : 'password'" label="Password" required persistent-hint outlined
+          :type="showKey ? 'text' : 'password'" :label="$t('password')" required persistent-hint outlined
           @click:append="showKey = !showKey">
         </v-text-field>
-        <v-btn block x-large dark type="submit" color="#012A4A" depressed class="justify-center" :loading="isLoading">Login
+        <v-btn block x-large dark type="submit" color="#6557F5" depressed class="justify-center" :loading="isLoading">{{$t('login')}}
         </v-btn>
       </v-form>
       <v-alert class="mt-7" v-if="emailConfirm" dismissible type="success">
         {{ emailConfirm }}
       </v-alert>
       <v-card-actions class="text-xs-center py-4">
-        <v-btn x-large color="orange lighten-2" text to="/reset-password"> Recuperar senha </v-btn>
+        <v-btn x-large color="orange lighten-2" text to="/reset-password"> {{$t('recover_password')}} </v-btn>
         <v-spacer></v-spacer>
-        <v-btn x-large color="orange lighten-2" text to="/register"> CADASTRO </v-btn>
+        <v-btn x-large color="orange lighten-2" text to="/register"> {{$t('register')}} </v-btn>
       </v-card-actions>
     </v-card>
     <TableActivities v-else />

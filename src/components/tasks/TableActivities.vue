@@ -2,7 +2,7 @@
     <v-container>
         <v-card class="my-8" elevation="0">
             <v-card-title>
-                <v-toolbar-title class="text-h5">{{ formTitle }}</v-toolbar-title>
+                <v-toolbar-title class="text-h5">{{$t('new_task')}}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <SubjectRegister />
             </v-card-title>
@@ -11,12 +11,12 @@
                     <v-row>
                         <v-col cols="12" sm="6" md="4" lg="4">
                             <v-text-field outlined dense hide-details clearable v-model="editedItem.name"
-                                label="Título da Atividade">
+                                :label="$t('activity_title')">
                             </v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4" lg="3">
                             <v-select outlined dense hide-details v-model="editedItem.subjects" clearable
-                                :items="subjectList" item-text="name" label="Selecionar Disciplina">
+                                :items="subjectList" item-text="name" :label="$t('select_subject')">
 
                                 <template v-slot:no-data>
                                     <v-list-item>
@@ -29,15 +29,15 @@
                         
                         <v-col cols="12" sm="6" md="4" lg="3">
                             <v-text-field type="date" outlined dense clearable hide-details v-model="editedItem.date"
-                                label="Data de Entrega"></v-text-field>
+                                :label="$t('delivery_date')"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4" lg="2">
-                            <v-btn color="#012a4a" class="py-5 white--text" block @click="save"
+                            <v-btn color="#6557F5" class="py-5 white--text" block @click="save"
                                 :disabled="!editedItem.name || !editedItem.subjects || !editedItem.date">
                                 <v-icon small color="orange" class="mr-2">
                                     mdi-file-plus
                                 </v-icon>
-                                Adicionar
+                                {{$t('add')}}
                             </v-btn>
                         </v-col>
 
@@ -47,7 +47,7 @@
 
         </v-card>
 
-        <v-data-table :headers="headers" :items="subjects" :items-per-page="itemsPerPage" sort-by="name"
+        <v-data-table :headers="headers" :items="tasks" :items-per-page="itemsPerPage" sort-by="name"
             hide-default-footer class="rounded" :loading="isLoading" loading-text="Loading... Please wait">
 <!--
             <template v-slot:[`item.check`]="{ item }">
@@ -62,7 +62,7 @@
                 <v-toolbar flat>
                     <v-toolbar-title class="text-h5">Minhas Atividades</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn color="#012A4A" dark class="mb-2">
+                    <v-btn color="#6557F5" dark class="mb-2">
                         <v-icon small color="orange" class="mr-2">
                             mdi-file-chart
                         </v-icon>
@@ -80,16 +80,16 @@
                                     <v-row>
                                         <v-col cols="12" sm="6" md="4" lg="6">
                                             <v-text-field outlined dense hide-details v-model="editedItem.name"
-                                                label="Atividade"></v-text-field>
+                                                :label="$t('activity_title')"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="4">
                                             <v-select outlined dense hide-details v-model="editedItem.subjects"
-                                                :items="subjectList" item-text="name" label="Disciplinas"></v-select>
+                                                :items="subjectList" item-text="name" :label="$t('subjects')"></v-select>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4" lg="2">
                                             <v-text-field type="date" outlined dense hide-details
-                                                v-model="editedItem.date" label="Data de Entrega"></v-text-field>
+                                                v-model="editedItem.date" :label="$t('delivery_date')"></v-text-field>
                                         </v-col>
 
                                     </v-row>
@@ -97,27 +97,24 @@
                             </v-card-text>
 
                             <v-card-actions>
-                                <v-btn color="red" outlined @click="deleteItemConfirm">
-                                    Excluir
-                                </v-btn>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" text @click="close">
-                                    Cancel
+                                    {{$t('cancel')}}
                                 </v-btn>
-                                <v-btn color="#012A4A" dark @click="save">
-                                    Salvar
+                                <v-btn color="#6557F5" dark @click="save">
+                                    {{$t('save')}}
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
 
-                    <v-dialog v-model="dialogDelete" max-width="300px">
+                    <v-dialog v-model="dialogDelete" max-width="400px">
                         <v-card>
-                            <v-card-title>Are you sure you want to delete this item?</v-card-title>
+                            <v-card-title class="body-1 justify-center">Are you sure you want to delete this item?</v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red" text @click="closeDelete">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                                <v-btn color="darken-1" dark  @click="deleteItemConfirm">OK</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -149,8 +146,8 @@
 
 <script>
 import axios from "axios";
-const URL_TASKS = 'http://localhost:3000/tasks'
-const URL_SUBJECTS = 'http://localhost:3000/subjects'
+const URL_TASKS = 'tasks'
+const URL_SUBJECTS = 'subjects'
 
 import SubjectRegister from "./SubjectRegister.vue";
 
@@ -170,6 +167,7 @@ export default {
             { text: 'Data de Entrega', align: 'center', value: 'date' },
             { text: 'Ações', align: 'left', value: 'actions', sortable: false },
         ],
+        tasks: [],
         subjects: [],
         subjectList: [],
         status: ['Finalizado', 'Atrasado', 'Em andamento', 'Adiantado', 'Agendado'],
@@ -194,13 +192,13 @@ export default {
     computed: {
         currentStatus() {
             if (date <= 100) {
-                this.date = "FINALIZADO"
+                this.date = "Finalizado"
             }
             else if (task.check = true) {
-                this.date = "EEM dia"
+                this.date = "EM dia"
             }
             else {
-                this.date = "AAtrasado"
+                this.date = "Atrasado"
             }
         },
         formTitle() {
@@ -231,7 +229,7 @@ export default {
             this.isLoading = true
             axios.get(URL_TASKS, {
             }).then(response => {
-                this.subjects = response.data
+                this.tasks = response.data
                 //console.log("DEU CERTO", response);
                 this.response = JSON.stringify(response, null, 2)
             }).catch(error => {
@@ -240,19 +238,19 @@ export default {
         },
 
         editItem(item) {
-            this.editedIndex = this.subjects.indexOf(item)
+            this.editedIndex = this.tasks.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialog = true
         },
 
         deleteItem(item) {
-            this.editedIndex = this.subjects.indexOf(item)
+            this.editedIndex = this.tasks.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialogDelete = true
         },
 
         deleteItemConfirm() {
-            this.subjects.splice(this.editedIndex, 1)
+            this.tasks.splice(this.editedIndex, 1)
             this.closeDelete()
             this.close()
         },
@@ -275,9 +273,9 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-                Object.assign(this.subjects[this.editedIndex], this.editedItem)
+                Object.assign(this.tasks[this.editedIndex], this.editedItem)
             } else {
-                this.subjects.push(this.editedItem)
+                this.tasks.push(this.editedItem)
             }
             this.close()
         },
