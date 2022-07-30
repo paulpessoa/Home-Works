@@ -11,8 +11,8 @@
         </v-text-field>
         <v-btn block x-large type="submit" color="#6557F5" depressed class="justify-center white--text">CONFIRM</v-btn>
       </v-form>
-      <v-card-actions class="text-xs-center py-4">
-        <v-btn block x-large color="orange lighten-2" text href="/home"> CANCEL </v-btn>
+      <v-card-actions class="row justify-center py-4">
+        <v-btn class="ma-4" block color="orange lighten-2" text href="/home"> CANCEL </v-btn>
       </v-card-actions>
     </v-card>
   </div>

@@ -13,11 +13,9 @@
           {{ emailConfirm }}
       </v-alert>
 
-      <v-card-actions class="text-xs-center py-4">
-        <v-btn x-large color="orange lighten-2" text to="/register"> CADASTRO </v-btn>
-      <v-spacer></v-spacer>
-        <v-btn x-large color="orange lighten-2" text href="/login"> login </v-btn>
-      
+      <v-card-actions class="row justify-center py-4">
+        <v-btn class="ma-4" color="orange lighten-2" text to="/register"> CADASTRO </v-btn>
+        <v-btn class="ma-4" color="orange lighten-2" text href="/login"> login </v-btn>
       </v-card-actions> 
     </v-card>
   </div>
