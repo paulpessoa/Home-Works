@@ -8,6 +8,7 @@
     "register": "Register",
     "hi": "Hey",
     "new_task": "New Task",
+    "edit_task": "Edit task",
     "activity_title": "Activity title",
     "select_subject": "Select Subject",
     "delivery_date": "Delivery date",
@@ -20,5 +21,13 @@
     "change_password": "Change Password",
     "logout": "Logout",
     "try_it_with_a": "Try it with a ",
-    "temporary_email": "temporary email"
+    "temporary_email": "temporary email",
+    "status": "Status",
+    "actions": "Actions",
+    "my_tasks": "My Tasks",
+    "create_report": "Create report",
+    "msg_delete_task": "Sure do you wanna delete this task?",
+    "confirm": "Confirm",
+    "backend_developer":"Backend developer",
+    "frontend_engineer":"Frontend enginner"
 }

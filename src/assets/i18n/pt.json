@@ -8,6 +8,7 @@
     "register": "Cadastre-se",
     "hi": "Oi",
     "new_task": "Nova Atividade",
+    "edit_task": "Editar atividade",
     "activity_title": "Título da Atividade",
     "select_subject": "Selecionar Disciplina",
     "delivery_date": "Data de Entrega",
@@ -20,5 +21,13 @@
     "change_password": "Trocar Senha",
     "logout": "Sair",
     "try_it_with_a": "Teste com um ",
-    "temporary_email": "e-mail temporário"
+    "temporary_email": "e-mail temporário",
+    "status": "Situação",
+    "actions": "Ações",
+    "my_tasks": "Minhas Atividades",
+    "create_report": "Criar relatório",
+    "msg_delete_task": "Tem certeza que deseja excluir esta atividade?",
+    "confirm": "Confirmar",
+    "backend_developer":"Desenvolvedor back-end",
+    "frontend_engineer":"Desenvolvedor front-end"
 }

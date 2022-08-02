@@ -27,22 +27,31 @@ export default {
         return {
         language: window.navigator.language,
         accessToken: sessionStorage.getItem("accessToken"),
-        authors: [
-            {
-                name: 'Paul Pessoa',
-                link: 'https://github.com/paulpessoa/home-works',
-                function: 'Frontend Engineer'
-            },
-            {
-                name: 'Jean de Paula',
-                link: 'https://github.com/jeancarlospaula/homeworks',
-                function: 'Backend Developer'
-            }
-        ],
+        
     }
     },
     methods: {
         
+    },
+    computed: {
+         authors () {
+      return [
+        
+  
+    {
+                name: 'Paul Pessoa',
+                link: 'https://github.com/paulpessoa/home-works',
+                function: this.$t('frontend_engineer')
+            },
+            {
+                name: 'Jean de Paula',
+                link: 'https://github.com/jeancarlospaula/homeworks',
+                function: this.$t('backend_developer')
+            }
+
+  
+  ]}
     }
+
 }
 </script>

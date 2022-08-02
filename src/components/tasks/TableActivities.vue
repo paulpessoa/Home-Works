@@ -60,19 +60,19 @@
 
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title class="text-h5">Minhas Atividades</v-toolbar-title>
+                    <v-toolbar-title class="text-h5">{{$t('my_tasks')}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-btn color="#6557F5" dark class="mb-2">
                         <v-icon small color="orange" class="mr-2">
                             mdi-file-chart
                         </v-icon>
-                        Gerar Relatório
+                        {{$t('create_report')}}
                     </v-btn>
                     <v-dialog v-model="dialog" max-width="80%">
 
                         <v-card>
                             <v-card-title>
-                                <span class="text-h5">{{ formTitle }}</span>
+                                <span class="text-h5">{{$t('edit_task')}}</span>
                             </v-card-title>
 
                             <v-card-text>
@@ -111,12 +111,15 @@
 
                     <v-dialog v-model="dialogDelete" max-width="400px">
                         <v-card>
-                            <v-card-title class="body-1 justify-center">Are you sure you want to delete this item?
+                            <v-card-title class="body-1 justify-center">
+                            
+                                                                {{ $t('msg_delete_task') }}
+                            
                             </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="red" text @click="closeDelete">Cancel</v-btn>
-                                <v-btn color="darken-1" dark @click="deleteItemConfirm">OK</v-btn>
+                                <v-btn color="red" text @click="closeDelete">{{ $t('cancel') }}</v-btn>
+                                <v-btn color="darken-1" dark @click="deleteItemConfirm">{{ $t('confirm') }}</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -126,7 +129,7 @@
             </template>
 
             <template v-slot:[`item.actions`]="{ item }">
-                <v-row>
+                <v-row class="justify-center">
                     <v-icon small color="orange" class="mr-2" @click="editItem(item)">
                         mdi-pencil
                     </v-icon>
@@ -161,14 +164,6 @@ export default {
         dialog: false,
         dialogDelete: false,
         isLoading: false,
-        headers: [
-            //  { text: '', align: 'center', value: 'check' },
-            { text: 'Atividade', align: 'start', value: 'name' },
-            { text: 'Disciplina', align: 'center', value: 'subjects' },
-            { text: 'Situação', align: 'center', value: 'status' },
-            { text: 'Data de Entrega', align: 'center', value: 'date' },
-            { text: 'Ações', align: 'left', value: 'actions', sortable: false },
-        ],
         tasks: [
             {
                 "check": true,
@@ -221,22 +216,7 @@ export default {
     components: {
         SubjectRegister
     },
-    computed: {
-        currentStatus() {
-            if (date <= 100) {
-                this.date = "Finalizado"
-            }
-            else if (task.check = true) {
-                this.date = "EM dia"
-            }
-            else {
-                this.date = "Atrasado"
-            }
-        },
-        formTitle() {
-            return this.editedIndex === -1 ? 'Nova Atividade' : 'Editar Atividade'
-        },
-    },
+    
     watch: {
         dialog(val) {
             val || this.close()
@@ -316,5 +296,59 @@ export default {
         this.getListTasks()
         this.listSubjects()
     },
+
+
+
+
+ computed: {   
+
+currentStatus() {
+            if (date <= 100) {
+                this.date = "Finalizado"
+            }
+            else if (task.check = true) {
+                this.date = "EM dia"
+            }
+            else {
+                this.date = "Atrasado"
+            }
+        },
+
+
+
+    //HEADERS TRanslated
+    headers () {
+      return [
+        {
+          text: this.$t('activity_title'),
+          align: 'start',
+          value: 'name'
+        },
+  { text: this.$t('subjects'),
+             align: 'center',
+              value: 'subjects' 
+              },
+            { text: this.$t('status'),
+             align: 'center',
+              value: 'status' 
+              },
+            { text: this.$t('delivery_date'),
+             align: 'center',
+              value: 'date'
+               },
+            { text: this.$t('actions'),
+             align: 'center',
+              value: 'actions',
+               sortable: false }
+  
+  
+  
+  
+  ]}
+ }
+
+
+
+
 }
 </script>
