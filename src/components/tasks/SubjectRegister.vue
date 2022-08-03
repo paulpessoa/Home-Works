@@ -15,8 +15,7 @@
       <v-card-text class="pa-4">
         <v-row>
           <v-col cols="12" sm="12" md="12" lg="12">
-            <v-alert class="mb-4 white--text text-center" v-if="isLoading" color="green">Disciplina adicionada com
-              sucesso!</v-alert>
+            <v-alert class="mb-4 white--text text-center" color="green">{{msg}}</v-alert>
             <v-text-field outlined v-model="subjects" dense hide-details :label="$t('new_subject')"></v-text-field>
           </v-col>
         </v-row>
@@ -24,17 +23,23 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn icon @click="saveSubject" color="red" :loading="isLoading">
+        <v-btn icon color="red" :loading="isLoading">
               <v-icon>mdi-delete-empty</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn color="red" text @click="dialogSubject = false">
           {{$t('cancel')}}
         </v-btn>
-        <v-btn color="#6557F5" dark @click="saveSubject" :loading="isLoading">
+        <v-btn color="#6557F5" dark @click="subjectCreate" :loading="isLoading">
           {{$t('save')}}
         </v-btn>
       </v-card-actions>
+
+      <ul id="example-1">
+  <li v-for="subject in abacaxi" :key="subject._id">
+    {{ subject.name }}
+  </li>
+</ul>
 
     </v-card>
   </v-dialog>
@@ -44,15 +49,17 @@
 
 <script>
 import axios from "axios";
-const URL_SUBJECTS = 'http://localhost:3000/subjects'
+const URL_SUBJECT_CREATE = 'https://homeworks-api.vercel.app/subject/create'
 
 export default {
   name: 'SubjectRegister',
   data() {
     return {
+      msg: '',
       dialogSubject: false,
       subjects: [],
       subjectList: null,
+      abacaxi: [],
       isLoading: false
     }
   },
@@ -61,24 +68,32 @@ export default {
       val || this.close()
     },
   },
+
   methods: {
 
     // Função adicionar nova disciplina
-    saveSubject() {
+    subjectCreate() {
       this.isLoading = true
-      axios.post(URL_SUBJECTS, {
+      axios.post(URL_SUBJECT_CREATE, {
         name: this.subjects
       }).then(response => {
-        this.subjects = response.data
+        this.subjects = response
+        console.log(response)
+        this.msg = response.data.message
+        
         setInterval(() => {
-          this.isLoading = false
           this.dialogSubject = false
         }, 1500);
         this.subjects = null
-        window.location.reload()
+       window.location.reload()
       }).catch(error => {
-      })
+        console.log(error)
+      }).finally(() => {
+        this.isLoading = false
+        console.log("finally call")
+      }) 
     }
+
   }
 }
 </script>

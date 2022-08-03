@@ -152,7 +152,7 @@
 <script>
 import axios from "axios";
 const URL_TASKS = 'tasks'
-const URL_SUBJECTS = 'subjects'
+const URL_SUBJECT_LIST = 'https://homeworks-api.vercel.app/subject/list'
 
 import SubjectRegister from "./SubjectRegister.vue";
 
@@ -228,7 +228,7 @@ export default {
     methods: {
         listSubjects() {
             this.isLoading = true
-            axios.get(URL_SUBJECTS, {
+            axios.get(URL_SUBJECT_LIST, {
             }).then(response => {
                 this.subjectList = response.data
                 //console.log("LISTOU", response);

@@ -62,9 +62,10 @@ export default {
         }
         accessToken();
         setTimeout(() => {
-          window.location.reload();
-          this.emailConfirm = false;
-        }, 3000);
+          this.emailConfirm = false,
+          this.$router.push('/');
+        window.location.reload();
+        }, 100);
         clearTimeout(setTimeout);
         this.response = JSON.stringify(response, null, 2);
       }).catch(error => {
