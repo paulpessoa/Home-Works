@@ -9,7 +9,7 @@
           :type="showKey ? 'text' : 'password'" :label="$t('password')" required persistent-hint outlined
           @click:append="showKey = !showKey">
         </v-text-field>
-        <v-btn block x-large dark type="submit" color="#6557F5" depressed class="justify-center" :loading="isLoading">{{$t('login')}}
+        <v-btn block x-large dark type="submit" color="#6557F5" depressed class="justify-center" :loading="loading">{{$t('login')}}
         </v-btn>
       </v-form>
       <v-alert class="mt-7" v-if="emailConfirm" dismissible type="success">
@@ -21,7 +21,6 @@
         <v-btn class="ma-4" color="orange lighten-2" text to="/register">{{$t('register')}} </v-btn>
       </v-card-actions>
     </v-card>
-    <TableActivities v-else />
   </div>
 
 </template>
@@ -37,43 +36,48 @@ export default {
   name: "FormLogin",
   data: () => ({
     accessToken: sessionStorage.getItem("accessToken"),
-    isLoading: false,
+    loading: false,
     showKey: false,
     password: null,
     email: sessionStorage.getItem("userEmail"),
     emailConfirm: null
   }),
   methods: {
+    seila(){
+ this.$router.push({name: 'home'});
+    },
     userLogin() {
+      this.loading = true;
       axios.post(url, {
         email: this.email,
         password: this.password,
       }).then(response => {
-        this.isLoading = true;
         this.emailConfirm = "User authentication succeeded"
         console.log(response.config.data)
         var userToken = response.data.accessToken
         var sessionMail = this.email
-
+        this.$router.push({name: 'home'}, window.location.reload(), this.loading = false);
+        
+        
         function accessToken() {
           sessionStorage.setItem("userEmail", sessionMail)
           sessionStorage.setItem("accessToken", userToken)
           sessionStorage.setItem("userName", response.data.firstName);
         }
         accessToken();
-        setTimeout(() => {
-          this.emailConfirm = false,
-          this.$router.push('/');
-        window.location.reload();
-        }, 100);
-        clearTimeout(setTimeout);
-        this.response = JSON.stringify(response, null, 2);
+                this.response = JSON.stringify(response, null, 2);
       }).catch(error => {
+        this.loading = false
         this.response = "Error: " + error;
         console.log("ERRO", error);
         this.emailConfirm = error.response.data.error.message.description;
-        this.isLoading = false
-      });
+      })
+        .finally(() => {
+          setTimeout(() => {
+          this.emailConfirm = false
+        }, 40000);
+        clearTimeout(setTimeout);
+        });
     },
   },
   components: { TableActivities }

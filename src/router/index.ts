@@ -20,11 +20,11 @@ const routes: Array<RouteConfig> = [
     component: ErrorComponent
   },
   {
-    path: '' || '/',
+    path: '' || '/' || 'home',
     redirect: { name: 'home' }
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: HomeDashboard
   },

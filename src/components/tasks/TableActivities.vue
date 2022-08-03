@@ -47,15 +47,8 @@
 
         </v-card>
 
-        <v-data-table :headers="headers" :items="tasks" :items-per-page="itemsPerPage" sort-by="name"
-            hide-default-footer class="rounded" :loading="isLoading" loading-text="Loading... Please wait">
-            <!--
-            <template v-slot:[`item.check`]="{ item }">
-            
-                <v-simple-checkbox v-model="item.check"></v-simple-checkbox>
-            
-            </template>
--->
+        <v-data-table scrollable :headers="headers"  :items="tasks" 
+            hide-default-footer :loading="isLoading">
 
 
             <template v-slot:top>
@@ -109,7 +102,7 @@
                         </v-card>
                     </v-dialog>
 
-                    <v-dialog v-model="dialogDelete" max-width="400px">
+                    <v-dialog v-model="dialogDelete" max-width="450px">
                         <v-card>
                             <v-card-title class="body-1 justify-center">
                             
@@ -187,16 +180,8 @@ export default {
                 "date": "2022-05-06"
             }
         ],
-        subjects: [
-            {
-                "name": "Matematica",
-                "id": 1
-            },
-            {
-                "name": "Português",
-                "id": 2
-            }],
-        subjectList: [],
+        subjects: null,
+        subjectList: null,
         status: ['Finalizado', 'Atrasado', 'Em andamento', 'Adiantado', 'Agendado'],
         itemsPerPage: 5,
         editedIndex: -1,

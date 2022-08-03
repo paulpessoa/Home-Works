@@ -2,19 +2,7 @@
   <div>
   <div v-if="accessToken">
       <TableActivities/>      
-    <div v-if="null">
-      <p> cadastrar atividade </p>
-      <TaskRegister/>
-      <p> minhas atividades</p>
-      <TaskRemove/>
-      <TaskReport/>
-      <TaskDone/>
-      <SubjectRegister/>
-
-    </div>      
-
-  </div>
-  
+  </div>  
   <FormLogin v-else-if="!accessToken"/>
   
 
@@ -25,7 +13,7 @@
 <script lang="ts">
   
   
-  import Vue from 'vue'
+
   import TaskRegister from "@/components/tasks/TaskRegister.vue"
   import TaskRemove from "@/components/tasks/TaskRemove.vue"
   import TaskReport from "@/components/tasks/TaskReport.vue"

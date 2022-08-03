@@ -57,7 +57,7 @@ export default {
       },
       {
         name: 'home',
-        path: '/home'
+        path: '/'
       },
     ],
     userName: sessionStorage.getItem("userName"),
@@ -66,7 +66,9 @@ export default {
   methods: {
     logout() {
       sessionStorage.clear();
+      this.$router.push("/");
       window.location.reload();
+
     },
        switchSelect(event) {
             localStorage.setItem('lang', event.target.value)
