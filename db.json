@@ -38,15 +38,5 @@
       "status": "Atrasado",
       "date": "2022-05-06"
     }
-  ],
-  "subjects": [
-    {
-      "name": "Matematica",
-      "id": 1
-    },
-    {
-      "name": "Português",
-      "id": 2
-    }
   ]
 }

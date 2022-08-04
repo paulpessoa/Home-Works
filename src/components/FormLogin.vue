@@ -12,8 +12,8 @@
         <v-btn block x-large dark type="submit" color="#6557F5" depressed class="justify-center" :loading="loading">{{$t('login')}}
         </v-btn>
       </v-form>
-      <v-alert class="mt-7" v-if="emailConfirm" dismissible type="success">
-        {{ emailConfirm }}
+      <v-alert class="mt-7" v-if="msg" dismissible type="success">
+        {{ msg }}
       </v-alert>
       <v-card-actions class="row justify-center py-4">
         <v-btn class="ma-4" color="orange lighten-2" text to="/reset-password">{{$t('recover_password')}} </v-btn>
@@ -40,20 +40,18 @@ export default {
     showKey: false,
     password: null,
     email: sessionStorage.getItem("userEmail"),
-    emailConfirm: null
+    msg: null
   }),
   methods: {
-    seila(){
- this.$router.push({name: 'home'});
-    },
     userLogin() {
       this.loading = true;
       axios.post(url, {
         email: this.email,
         password: this.password,
       }).then(response => {
-        this.emailConfirm = "User authentication succeeded"
-        console.log(response.config.data)
+
+        this.msg = response.data.firstName + " is authenticated!",
+        console.log(response)
         var userToken = response.data.accessToken
         var sessionMail = this.email
         this.$router.push({name: 'home'}, window.location.reload(), this.loading = false);
@@ -70,11 +68,11 @@ export default {
         this.loading = false
         this.response = "Error: " + error;
         console.log("ERRO", error);
-        this.emailConfirm = error.response.data.error.message.description;
+        this.msg = error.response.data.error.message.description;
       })
         .finally(() => {
           setTimeout(() => {
-          this.emailConfirm = false
+          this.msg = false
         }, 40000);
         clearTimeout(setTimeout);
         });
