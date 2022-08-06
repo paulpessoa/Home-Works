@@ -27,7 +27,7 @@
                         </v-col>
                         <v-col cols="12" sm="6" md="4" lg="3">
                             <v-select outlined dense hide-details v-model="editedItem.subjects" clearable
-                                :items="subjectList"  item-text="_id" item-value="_id" :label="$t('select_subject')">
+                                :items="subjectList"  item-text="id" item-value="id" :label="$t('select_subject')">
                                 <template v-slot:no-data>
                                     <v-list-item> Cadastre uma disciplina </v-list-item>
                                 </template>
@@ -82,7 +82,7 @@
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="4">
                                             <v-select outlined dense hide-details v-model="editedItem.subjects"
-                                                :items="subjectList" :value="_id" item-text="name" :label="$t('subjects')">
+                                                :items="subjectList" :value="id" item-text="name" :label="$t('subjects')">
                                             </v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="2">
@@ -161,8 +161,9 @@ import SubjectRegister from "./SubjectRegister.vue";
 export default {
     name: "TableTask",
     data: () => ({
+        msg: null,
         snackbar: null,
-        _id: null,
+        id: null,
         items: 2,
         statusTask: null,
         currentDate: new Date().toLocaleDateString("en-CA"),
