@@ -25,7 +25,7 @@
     "status": "Status",
     "actions": "Actions",
     "my_tasks": "My Tasks",
-    "create_report": "Create report",
+    "reports": "Reports",
     "msg_delete_task": "Sure do you wanna delete this task?",
     "confirm": "Confirm",
     "backend_developer":"Backend developer",

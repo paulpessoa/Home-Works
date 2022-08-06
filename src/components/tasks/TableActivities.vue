@@ -1,18 +1,18 @@
 <template>
     <v-container>
-             
+
         <v-card class="my-8" elevation="0">
             <v-card-title>
                 <v-toolbar-title class="text-h5">{{ $t("new_task") }}</v-toolbar-title>
                 <v-spacer></v-spacer>
-                 <v-snackbar color="green" v-model="snackbar">
-      {{ msg }}
-      <template v-slot:action="{ attrs }">
-        <v-btn color="white" href="/" loading text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
+                <v-snackbar color="green" v-model="snackbar">
+                    {{ msg }}
+                    <template v-slot:action="{ attrs }">
+                        <v-btn color="white" href="/" loading text v-bind="attrs" @click="snackbar = false">
+                            Close
+                        </v-btn>
+                    </template>
+                </v-snackbar>
 
                 <SubjectRegister />
             </v-card-title>
@@ -27,14 +27,14 @@
                         </v-col>
                         <v-col cols="12" sm="6" md="4" lg="3">
                             <v-select outlined dense hide-details v-model="editedItem.subjects" clearable
-                                :items="subjectList"  item-text="id" item-value="id" :label="$t('select_subject')">
+                                :items="subjectList" item-text="name" item-value="_id" :label="$t('select_subject')">
                                 <template v-slot:no-data>
                                     <v-list-item> Cadastre uma disciplina </v-list-item>
                                 </template>
                             </v-select>
                         </v-col>
 
-                      
+
 
                         <v-col cols="12" sm="6" md="4" lg="2">
                             <v-text-field type="date" outlined dense hide-details v-model="editedItem.date"
@@ -64,7 +64,7 @@
                     <v-spacer></v-spacer>
                     <v-btn color="#6557F5" dark class="mb-2">
                         <v-icon small color="orange" class="mr-2"> mdi-file-chart </v-icon>
-                        {{ $t("create_report") }}
+                        {{ $t("reports") }}
                     </v-btn>
                     <v-dialog v-model="dialog" max-width="80%">
                         <v-card>
@@ -82,7 +82,8 @@
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="4">
                                             <v-select outlined dense hide-details v-model="editedItem.subjects"
-                                                :items="subjectList" :value="id" item-text="name" :label="$t('subjects')">
+                                                :items="subjectList" value="_id" item-text="name"
+                                                :label="$t('subjects')">
                                             </v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="2">
@@ -163,7 +164,7 @@ export default {
     data: () => ({
         msg: null,
         snackbar: null,
-        id: null,
+        _id: null,
         items: 2,
         statusTask: null,
         currentDate: new Date().toLocaleDateString("en-CA"),
@@ -233,11 +234,8 @@ export default {
                 .get(URL_SUBJECT_LIST, {})
                 .then((response) => {
                     this.subjectList = response.data;
-                    console.log("SUBJECT LIST",response)
-                    //console.log("LISTOU", response);
                 })
                 .catch((error) => {
-                    //                console.log("DEU ERRADO", error)
                 })
                 .finally(() => (this.isLoading = false));
         },
@@ -256,46 +254,35 @@ export default {
                 .finally(() => (this.isLoading = false));
         },
 
-            // Função adicionar nova disciplina
-    taskCreate() {
-        console.log('criando task')
-      axios
-        .post(URL_TASK_CREATE, {
-          name: this.editedItem.name,
-          subject: this.editedItem.subjects,
-          finalDate: this.editedItem.date
-        })
-        .then((response) => {
-        this.msg = response.data.message
-        this.snackbar = true
-        this.subjects = response;
-        console.log('show TASK',response)
-        })
-        .catch((error) => {
-          console.log('POXA TASK',error);
-        })
-        .finally(() => {
-          this.editedItem.name = ''
-          this.editedItem.subjects = ''
-          this.editedItem.date = ''
-
-           setTimeout(() => {
-               window.location.reload()
-        }, 3000);
-        });
-    },
-
-
-
-
-
-
+        // Função adicionar nova disciplina
+        taskCreate() {
+            axios
+                .post(URL_TASK_CREATE, {
+                    name: this.editedItem.name,
+                    subject: this.editedItem.subjects,
+                    finalDate: this.editedItem.date
+                })
+                .then((response) => {
+                    this.msg = response.data.message
+                    this.snackbar = true
+                    this.subjects = response;
+                })
+                .catch((error) => {
+                })
+                .finally(() => {
+                    this.editedItem.name = ''
+                    this.editedItem.subjects = ''
+                    this.editedItem.date = ''
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 3000);
+                });
+        },
         editItem(item) {
             this.editedIndex = this.tasks.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
-
         deleteItem(item) {
             this.editedIndex = this.tasks.indexOf(item);
             this.editedItem = Object.assign({}, item);

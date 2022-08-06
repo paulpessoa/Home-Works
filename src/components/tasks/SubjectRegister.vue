@@ -19,24 +19,29 @@
           <v-col cols="12" sm="12" md="12" lg="12">
             <v-text-field outlined v-model="subjects" dense hide-details :label="$t('new_subject')">
               <template v-slot:append-outer>
-                <v-icon :key="`icon-${isEditing}`" v-if="!loading" :color="isEditing ? 'success' : 'info'" @click="subjectCreate">
+                <v-icon :key="`icon-${isEditing}`" v-if="!loading" :color="isEditing ? 'success' : 'info'"
+                  @click="subjectCreate">
                   mdi-content-save</v-icon>
-                  <v-progress-circular
-      indeterminate v-else :size="25"
-      color="primary"
-    ></v-progress-circular>
+                <v-progress-circular indeterminate v-else :size="25" color="primary"></v-progress-circular>
               </template>
             </v-text-field>
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-select :items="subjectList" outlined dense hide-details :label="$t('subjects')">
+
+
+            <v-select outlined dense hide-details v-model="deleteSubjects" :items="subjectList" item-text="name"
+              item-value="_id" :label="$t('select_subject')">
               <template v-slot:append-outer>
                 <v-icon :key="icon" color="error" @click="dialogDelete1 = true">mdi-delete-empty
                 </v-icon>
               </template>
             </v-select>
+          </v-col>
+
+
+
           </v-col>
         </v-row>
 
@@ -95,6 +100,18 @@ export default {
   },
 
   methods: {
+    // Lista as disciplinas
+    listSubjects() {
+      this.isLoading = true;
+      axios
+        .get(URL_SUBJECT_LIST, {})
+        .then((response) => {
+          this.subjectList = response.data;
+        })
+        .catch((error) => {
+        })
+        .finally(() => (this.isLoading = false));
+    },
     reload() {
       window.location.reload();
     },
@@ -119,5 +136,8 @@ export default {
         });
     },
   },
+  created() {
+    this.listSubjects()
+  }
 };
 </script>

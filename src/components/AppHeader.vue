@@ -4,15 +4,15 @@
       <a href="/" class="" style="text-decoration: none">
         <img class="mr-4" width="36px" src="../assets/logo.png" alt="Home Works Logo" />
       </a>
-      <a href="/" style="text-decoration: none">
-        <img width="250px" class="mt-1" src="../assets/homeworks-logo-text-bg.png" alt="Home Works Logo" />
+      <a href="/" class="hidden-xl-and-down" style="text-decoration: none">
+        <img width="200px" class="mt-1" src="../assets/homeworks-logo-text-bg.png" alt="Home Works Logo" />
       </a>
 
     </div>
     <v-spacer></v-spacer>
 
-    <v-select style="max-width: 120px" offset v-model="LangSelected.lang_id" hide-selected hide-details
-      :items="LangList" item-text="name" item-value="id" rounded small-chips dense return-object single-line
+    <v-select style="max-width: 101px" v-model="LangSelected.lang_id" hide-selected hide-details
+      :items="LangList" item-text="name" item-value="id" rounded dense return-object single-line
       @change="switchSelect()"></v-select>
 
     <v-menu v-if="accessToken" rounded offset-y>
@@ -56,7 +56,7 @@ export default {
   data: () => ({
     id: null,
     idLang: null,
-    LangSelected: { lang_id: currentLangId },
+    LangSelected: { lang_id: currentLangId || 1},
     LangList: [
       { id: 1, name: 'EN', idLang: 'en' },
       { id: 2, name: 'ES', idLang: 'es' },

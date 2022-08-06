@@ -25,7 +25,7 @@
     "status": "Estatus",
     "actions": "Acciones",
     "my_tasks": "Mis Tareas",
-    "create_report": "Crear reporte",
+    "reports": "Reportes",
     "msg_delete_task": "¿Seguro que quieres eliminar esta tarea?",
     "confirm": "Confirmar",
     "backend_developer":"Desarrollador back-end",

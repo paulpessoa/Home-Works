@@ -25,7 +25,7 @@
     "status": "Situação",
     "actions": "Ações",
     "my_tasks": "Minhas Atividades",
-    "create_report": "Criar relatório",
+    "reports": "Relatório",
     "msg_delete_task": "Tem certeza que deseja excluir esta atividade?",
     "confirm": "Confirmar",
     "backend_developer":"Desenvolvedor back-end",
