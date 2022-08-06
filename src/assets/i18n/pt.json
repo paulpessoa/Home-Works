@@ -29,5 +29,6 @@
     "msg_delete_task": "Tem certeza que deseja excluir esta atividade?",
     "confirm": "Confirmar",
     "backend_developer":"Desenvolvedor back-end",
-    "frontend_engineer":"Desenvolvedor front-end"
+    "frontend_engineer":"Desenvolvedor front-end",
+    "register_a_discipline": "Register a discipline"
 }

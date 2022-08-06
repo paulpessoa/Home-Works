@@ -3,13 +3,13 @@
     <v-card elevation="0" v-if="!accessToken" class="mx-auto px-8 py-2" max-width="460">
       <v-card-title class="justify-center my-4">{{$t('access')}}</v-card-title>
       <v-form @submit.prevent="userLogin">
-        <v-text-field v-model="email" filled type="mail" :label="$t('email')" required persistent-hint outlined>
+        <v-text-field v-model="email" filled type="mail" :label="$t('email')" :rules="emailRules" required persistent-hint outlined>
         </v-text-field>
-        <v-text-field v-model="password" filled :append-icon="showKey ? 'mdi-eye' : 'mdi-eye-off'"
+        <v-text-field v-model="password" filled :append-icon="showKey ? 'mdi-eye' : 'mdi-eye-off'" :rules="passwordRules" 
           :type="showKey ? 'text' : 'password'" :label="$t('password')" required persistent-hint outlined
           @click:append="showKey = !showKey">
         </v-text-field>
-        <v-btn block x-large dark type="submit" color="#6557F5" depressed class="justify-center" :loading="loading">{{$t('login')}}
+        <v-btn block x-large type="submit" color="#6557F5"  depressed :disabled="!email || !password" class="justify-center white--text" :loading="loading">{{$t('login')}}
         </v-btn>
       </v-form>
       <v-alert class="mt-7" v-if="msg" dismissible type="success">
@@ -40,6 +40,12 @@ export default {
     showKey: false,
     password: null,
     email: sessionStorage.getItem("userEmail"),
+    emailRules: [
+        v => !!v ,
+      ],
+    passwordRules: [
+        v => !!v,
+      ],
     msg: null
   }),
   methods: {
