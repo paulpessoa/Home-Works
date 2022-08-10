@@ -37,7 +37,7 @@
 
 
                         <v-col cols="12" sm="6" md="4" lg="2">
-                            <v-text-field type="date" outlined dense hide-details v-model="editedItem.date"
+                            <v-text-field type="date" outlined dense hide-details v-model="editedItem.date" 
                                 :label="$t('delivery_date')"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4" lg="2">
@@ -56,6 +56,22 @@
         </v-card>
 
         <v-data-table scrollable :headers="headers" :items="tasks" hide-default-footer :loading="isLoading">
+
+
+            <template v-slot:[`item.finished`]="{ item }">
+                <span class="justify-center">
+                    {{ item.finished = false ? "Concluída" : item.finalDate > currentDate ? 'Em dias' : 'Atrasado' }}
+                </span>
+            </template>
+
+            <template v-slot:[`item.finalDate`]="{ item }">
+                <span class="justify-center">
+                    {{ new Date(item.finalDate).toISOString().slice(0, 10) }}
+                </span>
+            </template>
+
+
+
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title class="text-h5">{{
@@ -81,19 +97,20 @@
                                                 :label="$t('activity_title')"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="4">
-                                            <v-select outlined dense hide-details v-model="editedItem.subjects"
+                                            <v-select outlined dense hide-details v-model="editedItem.subject"
                                                 :items="subjectList" value="_id" item-text="name"
                                                 :label="$t('subjects')">
                                             </v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="2">
-                                            <v-text-field outlined dense hide-details v-model="editedItem.status"
+                                            <v-text-field outlined dense hide-details v-model="editedItem.finished" disabled
                                                 :label="$t('status')">
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="2">
                                             <v-text-field type="date" outlined dense hide-details
-                                                v-model="editedItem.date" :label="$t('delivery_date')"></v-text-field>
+                                                v-model="editedItem.finalDate" :label="$t('delivery_date')">
+                                            </v-text-field>
                                         </v-col>
                                     </v-row>
                                 </v-container>
@@ -153,7 +170,7 @@
 
 <script>
 import axios from "axios";
-const URL_TASKS = "tasks";
+const URL_TASKS_LIST = "https://homeworks-api.vercel.app/task/list";
 const URL_SUBJECT_LIST = "https://homeworks-api.vercel.app/subject/list";
 const URL_TASK_CREATE = "https://homeworks-api.vercel.app/task/create";
 
@@ -167,34 +184,12 @@ export default {
         _id: null,
         items: 2,
         statusTask: null,
-        currentDate: new Date().toLocaleDateString("en-CA"),
+        currentDate: new Date().toISOString().slice(0, 10),
         dialog: false,
         dialogDelete: false,
         isLoading: false,
         id: null,
-        tasks: [
-            {
-                check: true,
-                name: "A Redação",
-                subjects: "Português",
-                status: null,
-                date: "2022-05-06",
-            },
-            {
-                check: false,
-                name: "B Redação",
-                subjects: "Português",
-                status: null,
-                date: "05-10-2022",
-            },
-            {
-                check: null,
-                name: "G Redação",
-                subjects: null,
-                status: "Atrasado",
-                date: "2022-05-06",
-            },
-        ],
+        tasks: [],
         subjects: null,
         subjectList: null,
         status: null,
@@ -204,13 +199,13 @@ export default {
             name: "",
             subjects: null,
             status: null,
-            date: null,
+            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         },
         defaultItem: {
             name: "",
             subjects: null,
             status: null,
-            date: null,
+            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         },
     }),
     components: {
@@ -240,12 +235,13 @@ export default {
                 .finally(() => (this.isLoading = false));
         },
         // lista de tarefas da API
-        getListTasks() {
+        listTasks() {
             this.isLoading = true;
             axios
-                .get(URL_TASKS, {})
+                .get(URL_TASKS_LIST, {})
                 .then((response) => {
                     this.tasks = response.data;
+                    console.log('taregasss1', response)
                     this.response = JSON.stringify(response, null, 2);
                 })
                 .catch((error) => {
@@ -268,6 +264,7 @@ export default {
                     this.subjects = response;
                 })
                 .catch((error) => {
+                    console.log(error)
                 })
                 .finally(() => {
                     this.editedItem.name = ''
@@ -321,7 +318,7 @@ export default {
         },
     },
     created() {
-        this.getListTasks();
+        this.listTasks();
         this.listSubjects();
     },
 
@@ -337,17 +334,17 @@ export default {
                 {
                     text: this.$t("subjects"),
                     align: "center",
-                    value: "subjects",
+                    value: "subject.name",
                 },
                 {
                     text: this.$t("status"),
                     align: "center",
-                    value: "status",
+                    value: "finished",
                 },
                 {
                     text: this.$t("delivery_date"),
                     align: "center",
-                    value: "date",
+                    value: "finalDate",
                 },
                 {
                     text: this.$t("actions"),
