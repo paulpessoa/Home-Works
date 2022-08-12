@@ -60,7 +60,7 @@ export default {
         console.log(response)
         var userToken = response.data.accessToken
         var sessionMail = this.email
-        this.$router.push({name: 'home'}, window.location.reload(), this.loading = false);
+        this.$router.push({name: 'home'}, this.loading = false, location.reload());
         
         
         function accessToken() {

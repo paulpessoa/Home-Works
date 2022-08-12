@@ -55,7 +55,7 @@
             </v-container>
         </v-card>
 
-        <v-data-table scrollable :headers="headers" :items="tasks" hide-default-footer :loading="isLoading">
+        <v-data-table scrollable :headers="headers" :items="tasks" :items-per-page="itemsPerPage" hide-default-footer :loading="isLoading">
 
 
             <template v-slot:[`item.finished`]="{ item }">
@@ -66,7 +66,7 @@
 
             <template v-slot:[`item.finalDate`]="{ item }">
                 <span class="justify-center">
-                    {{ new Date(item.finalDate).toISOString().slice(0, 10) }}
+                    {{ new Date(item.finalDate).toLocaleDateString() }}
                 </span>
             </template>
 
@@ -193,7 +193,7 @@ export default {
         subjects: null,
         subjectList: null,
         status: null,
-        itemsPerPage: 5,
+        itemsPerPage: 50,
         editedIndex: -1,
         editedItem: {
             name: "",
@@ -219,6 +219,9 @@ export default {
         dialogDelete(val) {
             val || this.closeDelete();
         },
+         name() {
+             this.listTasks() 
+         }
     },
 
     methods: {
@@ -241,7 +244,6 @@ export default {
                 .get(URL_TASKS_LIST, {})
                 .then((response) => {
                     this.tasks = response.data;
-                    console.log('taregasss1', response)
                     this.response = JSON.stringify(response, null, 2);
                 })
                 .catch((error) => {
@@ -271,8 +273,8 @@ export default {
                     this.editedItem.subjects = ''
                     this.editedItem.date = ''
                     setTimeout(() => {
-                        window.location.reload()
-                    }, 3000);
+                        location.reload()
+                    }, 1000);
                 });
         },
         editItem(item) {

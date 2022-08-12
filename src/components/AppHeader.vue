@@ -101,7 +101,7 @@ export default {
           setTimeout(() => {
             this.$router.push(
               { name: "home" },
-              window.location.reload(),
+              location.reload(),
               (this.loading = false)
             );
             this.msg = false;
@@ -116,7 +116,7 @@ export default {
       console.log(this.LangSelected.lang_id.id)
       console.log(currentLangId)
       console.log("idioma selecionado: ", localStorage.getItem("lang"));
-      window.location.reload();
+      location.reload();
     },
   },
 };

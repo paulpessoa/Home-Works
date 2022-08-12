@@ -39,10 +39,6 @@
               </template>
             </v-select>
           </v-col>
-
-
-
-          </v-col>
         </v-row>
 
         <v-card-actions class="mt-4">
@@ -113,7 +109,7 @@ export default {
         .finally(() => (this.isLoading = false));
     },
     reload() {
-      window.location.reload();
+      location.reload();
     },
     // Função adicionar nova disciplina
     subjectCreate() {
@@ -126,17 +122,16 @@ export default {
           this.subjects = response;
           this.msg = response.data.message;
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
         })
         .finally(() => {
           this.loading = false;
           this.subjects = null;
-          window.location.reload()
+          location.reload()
         });
     },
   },
-  created() {
+  mounted() {
     this.listSubjects()
   }
 };
