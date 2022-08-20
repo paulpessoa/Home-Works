@@ -78,6 +78,7 @@ export default {
   name: "SubjectRegister",
   data() {
     return {
+      deleteSubjects: null,
       dialogDelete1: false,
       isEditing: false,
       isEditing1: false,

@@ -30,5 +30,8 @@
     "confirm": "Confirmar",
     "backend_developer":"Desenvolvedor back-end",
     "frontend_engineer":"Desenvolvedor front-end",
-    "register_a_discipline": "Register a discipline"
+    "register_a_subject": "Registrar uma disciplna",
+    "done": "Concluída",
+    "in_progress": "Em andamento",
+    "late": "Atrasada"
 }

@@ -29,5 +29,9 @@
     "msg_delete_task": "¿Seguro que quieres eliminar esta tarea?",
     "confirm": "Confirmar",
     "backend_developer":"Desarrollador back-end",
-    "frontend_engineer":"Ingeniero front-end"
+    "frontend_engineer":"Ingeniero front-end",
+    "register_a_subject": "Registrar una disciplina",
+    "done": "Hecho",
+    "in_progress": "En proceso",
+    "late": "Retrasada"
 }

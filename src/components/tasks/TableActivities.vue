@@ -8,7 +8,8 @@
                 <v-snackbar color="green" v-model="snackbar">
                     {{ msg }}
                     <template v-slot:action="{ attrs }">
-                        <v-btn color="white" href="/" loading text v-bind="attrs" @click="snackbar = false">
+                        <v-btn color="white" href="/" :loading="isLoading" text v-bind="attrs"
+                            @click="snackbar = false">
                             Close
                         </v-btn>
                     </template>
@@ -29,21 +30,18 @@
                             <v-select outlined dense hide-details v-model="editedItem.subjects" clearable
                                 :items="subjectList" item-text="name" item-value="_id" :label="$t('select_subject')">
                                 <template v-slot:no-data>
-                                    <v-list-item> Cadastre uma disciplina </v-list-item>
+                                    <v-list-item> {{$t('register_a_subject')}} </v-list-item>
                                 </template>
                             </v-select>
                         </v-col>
 
-
-
                         <v-col cols="12" sm="6" md="4" lg="2">
-                            <v-text-field type="date" outlined dense hide-details v-model="editedItem.date" 
+                            <v-text-field type="date" outlined dense hide-details v-model="editedItem.date"
                                 :label="$t('delivery_date')"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4" lg="2">
                             <v-btn color="#6557F5" class="py-5 white--text" block @click="taskCreate" :disabled="
-                                !editedItem.name || !editedItem.subjects || !editedItem.date
-                            ">
+                                !editedItem.name || !editedItem.subjects || !editedItem.date">
                                 <v-icon small color="orange" class="mr-2">
                                     mdi-file-plus
                                 </v-icon>
@@ -55,12 +53,12 @@
             </v-container>
         </v-card>
 
-        <v-data-table scrollable :headers="headers" :items="tasks" :items-per-page="itemsPerPage" hide-default-footer :loading="isLoading">
-
+        <v-data-table scrollable :headers="headers" :items="tasks" :items-per-page="itemsPerPage" hide-default-footer
+            :loading="isLoading">
 
             <template v-slot:[`item.finished`]="{ item }">
                 <span class="justify-center">
-                    {{ item.finished = false ? "Concluída" : item.finalDate > currentDate ? 'Em dias' : 'Atrasado' }}
+                    {{ item.finished = false ? $t("done") : item.finalDate > currentDate ? $t("in_progress") : $t("late") }}
                 </span>
             </template>
 
@@ -103,8 +101,8 @@
                                             </v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="2">
-                                            <v-text-field outlined dense hide-details v-model="editedItem.finished" disabled
-                                                :label="$t('status')">
+                                            <v-text-field outlined dense hide-details v-model="editedItem.finished"
+                                                disabled :label="$t('status')">
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4" lg="2">
@@ -163,16 +161,12 @@
     </v-container>
 </template>
 
-
-
-
-
-
 <script>
 import axios from "axios";
 const URL_TASKS_LIST = "https://homeworks-api.vercel.app/task/list";
 const URL_SUBJECT_LIST = "https://homeworks-api.vercel.app/subject/list";
 const URL_TASK_CREATE = "https://homeworks-api.vercel.app/task/create";
+const URL_TASK_DELETE = 'https://homeworks-api.vercel.app/task/'
 
 import SubjectRegister from "./SubjectRegister.vue";
 
@@ -186,6 +180,7 @@ export default {
         statusTask: null,
         currentDate: new Date().toISOString().slice(0, 10),
         dialog: false,
+        idDelete: null,
         dialogDelete: false,
         isLoading: false,
         id: null,
@@ -219,9 +214,9 @@ export default {
         dialogDelete(val) {
             val || this.closeDelete();
         },
-         name() {
-             this.listTasks() 
-         }
+        name() {
+            this.listTasks()
+        }
     },
 
     methods: {
@@ -284,16 +279,33 @@ export default {
         },
         deleteItem(item) {
             this.editedIndex = this.tasks.indexOf(item);
+            this.idDelete = item._id
             this.editedItem = Object.assign({}, item);
             this.dialogDelete = true;
         },
-
         deleteItemConfirm() {
-            this.tasks.splice(this.editedIndex, 1);
+            this.isLoading = true;
+            axios
+                .delete(URL_TASK_DELETE + this.idDelete, {})
+                .then((response) => {
+                    this.snackbar = true
+                    this.msg = response.data.message
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        this.snackbar = false
+                        this.isLoading = false
+                        //location.reload()
+                        this.tasks.splice(this.editedIndex, 1);
+                    }, 1000);
+                }
+                );
             this.closeDelete();
             this.close();
         },
-
         close() {
             this.dialog = false;
             this.$nextTick(() => {
@@ -301,15 +313,9 @@ export default {
                 this.editedIndex = -1;
             });
         },
-
         closeDelete() {
             this.dialogDelete = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
         },
-
         save() {
             if (this.editedIndex > -1) {
                 Object.assign(this.tasks[this.editedIndex], this.editedItem);

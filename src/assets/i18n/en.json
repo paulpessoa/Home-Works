@@ -29,5 +29,9 @@
     "msg_delete_task": "Sure do you wanna delete this task?",
     "confirm": "Confirm",
     "backend_developer":"Backend developer",
-    "frontend_engineer":"Frontend enginner"
+    "frontend_engineer":"Frontend enginner",
+    "register_a_subject": "Register a subject",
+    "done": "Done",
+    "in_progress": "In progress",
+    "late": "Late"
 }
