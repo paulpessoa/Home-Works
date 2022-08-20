@@ -23,13 +23,36 @@
 
  ## Extras:
 
-- [ ] Multi Language
+- [x] Multi Language
 - [ ] Dark Theme
 
+## Functions:
+### Account Routes
+- [x] Create an account
+- [x] Send account confirmation email
+- [x] Confirm account
+- [ ] Send reset password email
+- [ ] Reset password
+- [x] Login
+- [x] Logout
 
+### Subject Routes
+- [x] Create a subject
+- [x] List all user subjects
+- [ ] Get an user subject by id
+- [ ] Update an user subject by id
+- [ ] Delete an user subject by id
+
+### Task Routes
+- [x] Create a task
+- [x] List all user tasks
+- [ ] Get an user task by id
+- [ ] Update an user task by id
+- [x] Delete an user task by id
+
+Front-end wireframe
 
 <a href="https://whimsical.com/wireframe-tdYmWwwSdqR4SqEoaFNUX" target="_blank"><img src="./src/assets/home-works-scope.png" alt="Home Works Scope"/></a>
-
 
 
 ## Project setup
