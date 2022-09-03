@@ -163,10 +163,10 @@
 
 <script>
 import axios from "axios";
-const URL_TASKS_LIST = "https://homeworks-api.vercel.app/task/list";
-const URL_SUBJECT_LIST = "https://homeworks-api.vercel.app/subject/list";
-const URL_TASK_CREATE = "https://homeworks-api.vercel.app/task/create";
-const URL_TASK_DELETE = 'https://homeworks-api.vercel.app/task/'
+const URL_TASKS_LIST = "https://homeworks-api.me/task/list";
+const URL_SUBJECT_LIST = "https://homeworks-api.me/subject/list";
+const URL_TASK_CREATE = "https://homeworks-api.me/task/create";
+const URL_TASK_DELETE = 'https://homeworks-api.me/task/'
 
 import SubjectRegister from "./SubjectRegister.vue";
 

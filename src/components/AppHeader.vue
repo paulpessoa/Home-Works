@@ -47,7 +47,7 @@
 
 <script>
 import axios from "axios";
-const URL_LOGOUT = "https://homeworks-api.vercel.app/account/logout";
+const URL_LOGOUT = "https://homeworks-api.me/account/logout";
 const lang = localStorage.getItem("lang") || "en";
 
 const currentLangId = parseInt(localStorage.getItem("idLocale"))

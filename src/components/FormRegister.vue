@@ -42,8 +42,8 @@
 
 <script>
 import axios from "axios";
-const urlRegister = "https://homeworks-api.vercel.app/account/register"
-const urlConfirm = "https://homeworks-api.vercel.app/account/confirm"
+const urlRegister = "https://homeworks-api.me/account/register"
+const urlConfirm = "https://homeworks-api.me/account/confirm"
 
 export default {
   name: "FormRegister",
