@@ -20,7 +20,7 @@
           :disabled="!password" :type="showKey2 ? 'text' : 'password'" label="Confirm Password" required outlined
           counter :rules="[passwordConfirmationRule]" @click:append="showKey2 = !showKey2"></v-text-field>
 
-        <v-btn block x-large type="submit" class="white--text" color="#6557F5" depressed :loading="isLoading"
+        <v-btn block x-large type="submit" class="white--text" color="#6557F5" depressed :loading="loading">
           :disabled="!firstName || !password || !email">Cadastrar</v-btn>
       </v-form>
 
@@ -42,16 +42,13 @@
 
 <script>
 import axios from "axios";
-const urlRegister = "https://homeworks-api.me/account/register"
-const urlConfirm = "https://homeworks-api.me/account/confirm"
 
 export default {
   name: "FormRegister",
   data: () => ({
-    isLoading: false,
+    loading: null,
     showKey1: false,
     showKey2: false,
-
     firstName: null,
     lastName: null,
     email: null,
@@ -65,53 +62,39 @@ export default {
   }),
   methods: {
     createUser() {
+      this.loading = true;
       axios
-        .post(urlRegister, {
+        .post('account/register', {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,
           password: this.password,
         })
         .then((response) => {
-          this.isLoading = true
           // ------ ENVIA CONFIRMAÇÂO PARA O E-MAIL ------- //
-          axios.post(urlConfirm, {
+          axios.post('account/confirm', {
             email: this.email,
           }).then(response => {
-            this.response = JSON.stringify(response, null, 2)
+            sessionStorage.setItem("userEmail", this.email);
+            sessionStorage.setItem("userName", response.data.message.user.firstName);
           }).catch(error => {
             this.response = error
-            console.log("ERRO-CONFIRMAÇÃO", error);
           })
           // ------ ENVIA CONFIRMAÇÂO PARA O E-MAIL ------- //
-
-          console.log("USUARIO CRIADO", response);
-          var sessionMail = this.email
-          function userEmail() {
-            sessionStorage.setItem("userEmail", sessionMail);
-            sessionStorage.setItem("userName", response.data.message.user.firstName);
-          }
-          userEmail()
           this.emailConfirm = response.data.message.description;
-          setTimeout(() => {
-            this.emailConfirm = false;
-            this.$router.push({
-              name: "email-confirmation",
-              email: sessionStorage.getItem("userEmail")
-            });
-          }, 3500);
-          // var mailconfirmation = setInterval(() => {
-          //   clearInterval(mailconfirmation);
-          // }, 3000);
-          this.response = JSON.stringify(response, null, 2);
+          this.emailConfirm = false;
+          this.$router.push({
+            name: "email-confirmation",
+            email: sessionStorage.getItem("userEmail")
+          });
         })
         .catch((error) => {
-          this.response = "Error: " + error;
-          console.log("ERROU CRIAÇÃO", error);
           this.emailConfirm = error.response.data.error.message;
-          this.isLoading = false
+        })
+        .finally(() => {
+          this.loading = false
         });
-    },
+      },
 
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
  <div class="pa-6">
-    <v-card elevation="0" v-if="!accessToken" class="mx-auto px-8 py-2" max-width="460">
+    <v-card elevation="0" class="mx-auto px-8 py-2" max-width="460">
       <v-card-title class="justify-center my-4">{{$t('access')}}</v-card-title>
       <v-form @submit.prevent="userLogin">
         <v-text-field v-model="email" filled type="mail" :label="$t('email')" :rules="emailRules" required persistent-hint outlined>
@@ -17,13 +17,9 @@
       </v-alert>
       <v-card-actions class="row justify-center py-4">
         <v-btn class="ma-4" color="orange lighten-2" text to="/reset-password">{{$t('recover_password')}} </v-btn>
-        
         <v-btn class="ma-4" color="orange lighten-2" text to="/register">{{$t('register')}} </v-btn>
       </v-card-actions>
     </v-card>
-    <div v-if="accessToken">
-      <TableActivities/>      
-  </div> 
   </div>
 
 </template>
@@ -32,8 +28,6 @@
 
 <script>
 import axios from "axios";
-import TableActivities from "@/components/tasks/TableActivities.vue";
-const url = "https://homeworks-api.me/account/login";
 
 export default {
   name: "FormLogin",
@@ -51,47 +45,30 @@ export default {
       ],
     msg: null
   }),
+  created() {
+      if (this.accessToken) {
+        this.$router.push("/dashboard");
+      }
+    },
   methods: {
     userLogin() {
       this.loading = true;
-      axios.post(url, {
+      axios.post('account/login', {
         email: this.email,
         password: this.password,
       }).then(response => {
-        var userToken = response.data.accessToken
-        var sessionMail = this.email
-
-        this.accessToken = true
-        this.msg = response.data.firstName + " is authenticated!",
-        this.loading = false, 
-        console.log(response)    
-        this.$router.push({name: 'dashboard'}, 
-        );
-        
-        function accessToken() {
-          sessionStorage.setItem("userEmail", sessionMail)
-          sessionStorage.setItem("accessToken", userToken)
-          sessionStorage.setItem("userName", response.data.firstName);
-        }
-        accessToken();
-                this.response = JSON.stringify(response, null, 2);
+        sessionStorage.setItem("userEmail", this.email)
+        sessionStorage.setItem("accessToken", response.data.accessToken)
+        this.msg = "You are authenticated!" 
       }).catch(error => {
-        this.loading = false
-        this.response = "Error: " + error;
-        console.log("ERRO", error);
         this.msg = error.response.data.error.message.description;
       })
-        .finally(() => {
-          setTimeout(() => {
+      .finally(() => {
+          location.reload()
+          this.loading = false,
           this.msg = false
-        }, 40000);
-        clearTimeout(setTimeout);
-      
-
-
         });
     },
   },
-  components: { TableActivities }
 }
 </script>

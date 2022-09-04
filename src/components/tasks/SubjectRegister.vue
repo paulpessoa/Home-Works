@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialogSubject" max-width="400px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="#6557F5" outlined class="mb-2" v-bind="attrs" v-on="on">
+      <v-btn color="#6557F5" outlined class="mb-2"  v-bind="attrs" v-on="on">
         <v-icon small color="orange" class="mr-2"> mdi-card-plus </v-icon>
         {{ $t("subjects") }}
       </v-btn>
@@ -19,7 +19,7 @@
           <v-col cols="12" sm="12" md="12" lg="12">
             <v-text-field outlined v-model="subjects" dense hide-details :label="$t('new_subject')">
               <template v-slot:append-outer>
-                <v-icon :key="`icon-${isEditing}`" v-if="!loading" :color="isEditing ? 'success' : 'info'"
+                <v-icon :key="`icon-${isEditing}`" v-if="!loading" :loading="loading" :color="isEditing ? 'success' : 'info'"
                   @click="subjectCreate">
                   mdi-content-save</v-icon>
                 <v-progress-circular indeterminate v-else :size="25" color="primary"></v-progress-circular>
@@ -29,7 +29,6 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-
 
             <v-select outlined dense hide-details v-model="deleteSubjects" :items="subjectList" item-text="name"
               item-value="_id" :label="$t('select_subject')">
@@ -71,13 +70,12 @@
 
 <script>
 import axios from "axios";
-const URL_SUBJECT_CREATE = "https://homeworks-api.me/subject/create";
-const URL_SUBJECT_LIST = "https://homeworks-api.me/subject/list";
 
 export default {
   name: "SubjectRegister",
   data() {
     return {
+      loading: null,
       deleteSubjects: null,
       dialogDelete1: false,
       isEditing: false,
@@ -87,7 +85,6 @@ export default {
       subjects: [],
       subjectList: [],
       abacaxi: [],
-      loading: false,
     };
   },
   watch: {
@@ -99,24 +96,24 @@ export default {
   methods: {
     // Lista as disciplinas
     listSubjects() {
-      this.isLoading = true;
+      this.loading = true
       axios
-        .get(URL_SUBJECT_LIST, {})
+        .get('subject/list', {})
         .then((response) => {
           this.subjectList = response.data;
         })
         .catch((error) => {
+          console.log(error)
         })
-        .finally(() => (this.isLoading = false));
-    },
-    reload() {
-      location.reload();
+        .finally(() => {
+          this.loading = false
+        })
     },
     // Função adicionar nova disciplina
     subjectCreate() {
-      this.loading = true;
+      this.loading = true
       axios
-        .post(URL_SUBJECT_CREATE, {
+        .post('subject/create', {
           name: this.subjects,
         })
         .then((response) => {
@@ -132,7 +129,7 @@ export default {
         });
     },
   },
-  mounted() {
+  created() {
     this.listSubjects()
   }
 };

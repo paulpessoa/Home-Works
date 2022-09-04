@@ -7,8 +7,8 @@
       <a href="/" class="hidden-xl-and-down" style="text-decoration: none">
         <img width="200px" class="mt-1" src="../assets/homeworks-logo-text-bg.png" alt="Home Works Logo" />
       </a>
-
     </div>
+    
     <v-spacer></v-spacer>
 
     <v-select style="max-width: 101px" v-model="LangSelected.lang_id" hide-selected hide-details
@@ -34,7 +34,7 @@
     <v-snackbar color="green" v-model="snackbar">
       {{ msg }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="white" href="/" loading text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="white" href="/" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -44,7 +44,6 @@
 
 <script>
 import axios from "axios";
-const URL_LOGOUT = "https://homeworks-api.me/account/logout";
 const lang = localStorage.getItem("lang") || "en";
 
 const currentLangId = parseInt(localStorage.getItem("idLocale"))
@@ -63,56 +62,30 @@ export default {
     lang: lang,
     msg: null,
     language: window.navigator.language,
-    links: [
-      {
-        name: "sair",
-        path: "/sair",
-      },
-      {
-        name: "config",
-        path: "/config",
-      },
-      {
-        name: "home",
-        path: "/",
-      },
-    ],
     userName: sessionStorage.getItem("userName"),
     accessToken: sessionStorage.getItem("accessToken"),
   }),
   methods: {
     userLogout() {
       axios
-        .post(URL_LOGOUT, {})
+        .post('account/logout', {})
         .then((response) => {
           this.snackbar = true;
-          console.log(response);
           sessionStorage.clear();
           this.msg = response.data.message;
         })
         .catch((error) => {
-          console.log("ERRO", error);
           this.msg = error.response.data.error.message.description;
         })
         .finally(() => {
-          setTimeout(() => {
-            this.$router.push(
-              { name: "home" },
-              location.reload(),
-              (this.loading = false)
-            );
-            this.msg = false;
-            this.snackbar = false;
-          }, 3000);
+          location.reload(),
+          this.snackbar = false;
+          this.loading = false
         });
     },
-
     switchSelect() {
       localStorage.setItem("lang", this.LangSelected.lang_id.idLang);
       localStorage.setItem("idLocale", this.LangSelected.lang_id.id);
-      console.log(this.LangSelected.lang_id.id)
-      console.log(currentLangId)
-      console.log("idioma selecionado: ", localStorage.getItem("lang"));
       location.reload();
     },
   },

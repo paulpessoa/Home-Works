@@ -26,11 +26,9 @@ import Vue from "vue";
 import AppFooter from "./components/AppFooter.vue";
 import AppHeader from "./components/AppHeader.vue";
 
-
 export default Vue.extend({
   name: "App",
   data: () => ({
-    //
     accessToken: sessionStorage.getItem("accessToken"),
   }),
   components: {

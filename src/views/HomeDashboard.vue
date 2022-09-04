@@ -1,33 +1,24 @@
 <template>
-  <div>
-  <div v-if="accessToken">
-      <TableActivities/>      
-  </div>  
-  <FormLogin v-else-if="!accessToken"/>
-  
-
-  </div>
-
+  <TableActivities />
 </template>
 
-<script lang="ts">
-  
-  
-
+<script>
   import TaskRegister from "@/components/tasks/TaskRegister.vue"
   import TaskRemove from "@/components/tasks/TaskRemove.vue"
   import TaskReport from "@/components/tasks/TaskReport.vue"
   import TaskDone from "@/components/tasks/TaskDone.vue"
   import SubjectRegister from "@/components/tasks/SubjectRegister.vue"
-  import FormLogin from "@/components/FormLogin.vue"
   import TableActivities from "@/components/tasks/TableActivities.vue"
-
   export default {
     name: 'HomeDashboard',
     data: () => ({
       accessToken: sessionStorage.getItem("accessToken"),
     }),
-  
+    created() {
+      if (!this.accessToken) {
+        this.$router.push("/login");
+      }
+    },
     components: {
       TableActivities,
       TaskRegister,
@@ -35,7 +26,6 @@
       TaskReport,
       TaskDone,
       SubjectRegister,
-      FormLogin
-    },    
-  }
+    }, 
+      }
 </script>

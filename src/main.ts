@@ -9,7 +9,7 @@ import axios from 'axios'
 
 const accessToken = sessionStorage.getItem('accessToken') || 'null';
 const lang = localStorage.getItem('lang') || 'en';
-axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.baseURL = 'https://homeworks-api.me/';
 axios.defaults.headers.common['Accept-Language'] = lang;
 axios.defaults.headers.common['x-access-token'] = accessToken;
 

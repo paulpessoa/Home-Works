@@ -8,7 +8,7 @@
                 <v-snackbar color="green" v-model="snackbar">
                     {{ msg }}
                     <template v-slot:action="{ attrs }">
-                        <v-btn color="white" href="/" :loading="isLoading" text v-bind="attrs"
+                        <v-btn color="white" href="/" :loading="loading" text v-bind="attrs"
                             @click="snackbar = false">
                             Close
                         </v-btn>
@@ -40,7 +40,7 @@
                                 :label="$t('delivery_date')"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4" lg="2">
-                            <v-btn color="#6557F5" class="py-5 white--text" block @click="taskCreate" :disabled="
+                            <v-btn color="#6557F5" class="py-5 white--text" :loading="loading" block @click="taskCreate" :disabled="
                                 !editedItem.name || !editedItem.subjects || !editedItem.date">
                                 <v-icon small color="orange" class="mr-2">
                                     mdi-file-plus
@@ -53,8 +53,7 @@
             </v-container>
         </v-card>
 
-        <v-data-table scrollable :headers="headers" :items="tasks" :items-per-page="itemsPerPage" hide-default-footer
-            :loading="isLoading">
+        <v-data-table scrollable :headers="headers" :items="tasks" :items-per-page="itemsPerPage" hide-default-footer :loading="loading">
 
             <template v-slot:[`item.finished`]="{ item }">
                 <span class="justify-center">
@@ -163,16 +162,12 @@
 
 <script>
 import axios from "axios";
-const URL_TASKS_LIST = "https://homeworks-api.me/task/list";
-const URL_SUBJECT_LIST = "https://homeworks-api.me/subject/list";
-const URL_TASK_CREATE = "https://homeworks-api.me/task/create";
-const URL_TASK_DELETE = 'https://homeworks-api.me/task/'
-
 import SubjectRegister from "./SubjectRegister.vue";
 
 export default {
     name: "TableTask",
     data: () => ({
+        loading: null,
         msg: null,
         snackbar: null,
         _id: null,
@@ -182,7 +177,6 @@ export default {
         dialog: false,
         idDelete: null,
         dialogDelete: false,
-        isLoading: false,
         id: null,
         tasks: [],
         subjects: null,
@@ -222,35 +216,36 @@ export default {
     methods: {
         // Lista as disciplinas
         listSubjects() {
-            this.isLoading = true;
+            this.loading = true
             axios
-                .get(URL_SUBJECT_LIST, {})
+                .get('subject/list', {})
                 .then((response) => {
                     this.subjectList = response.data;
                 })
                 .catch((error) => {
+                    console.log(error)
                 })
-                .finally(() => (this.isLoading = false));
+                .finally(() => (this.loading = false));
         },
         // lista de tarefas da API
         listTasks() {
-            this.isLoading = true;
+            this.loading = true
             axios
-                .get(URL_TASKS_LIST, {})
+                .get('task/list', {})
                 .then((response) => {
                     this.tasks = response.data;
-                    this.response = JSON.stringify(response, null, 2);
                 })
                 .catch((error) => {
                     console.log(error);
                 })
-                .finally(() => (this.isLoading = false));
+                .finally(() => (this.loading = false));
         },
 
         // Função adicionar nova disciplina
         taskCreate() {
+            this.loading = true
             axios
-                .post(URL_TASK_CREATE, {
+                .post('task/create', {
                     name: this.editedItem.name,
                     subject: this.editedItem.subjects,
                     finalDate: this.editedItem.date
@@ -264,12 +259,11 @@ export default {
                     console.log(error)
                 })
                 .finally(() => {
+                    this.loading = false
                     this.editedItem.name = ''
                     this.editedItem.subjects = ''
                     this.editedItem.date = ''
-                    setTimeout(() => {
-                        location.reload()
-                    }, 1000);
+                    location.reload()
                 });
         },
         editItem(item) {
@@ -284,9 +278,9 @@ export default {
             this.dialogDelete = true;
         },
         deleteItemConfirm() {
-            this.isLoading = true;
+            this.loading = true
             axios
-                .delete(URL_TASK_DELETE + this.idDelete, {})
+                .delete('task/' + this.idDelete, {})
                 .then((response) => {
                     this.snackbar = true
                     this.msg = response.data.message
@@ -295,12 +289,10 @@ export default {
                     console.log(error);
                 })
                 .finally(() => {
-                    setTimeout(() => {
-                        this.snackbar = false
-                        this.isLoading = false
-                        //location.reload()
-                        this.tasks.splice(this.editedIndex, 1);
-                    }, 1000);
+                this.snackbar = false
+                //location.reload()
+                this.tasks.splice(this.editedIndex, 1);
+                this.loading = false
                 }
                 );
             this.closeDelete();
