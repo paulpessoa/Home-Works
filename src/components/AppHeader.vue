@@ -79,8 +79,7 @@ export default {
         })
         .finally(() => {
           location.reload(),
-          this.snackbar = false;
-          this.loading = false
+          this.snackbar = false
         });
     },
     switchSelect() {
