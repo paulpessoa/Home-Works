@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <TableActivities />
+=======
+      <TableActivities/>        
+>>>>>>> de7073ff0a1ccf4d06b4b56eb8fc29184c9c83c1
 </template>
 
 <script>
@@ -27,5 +31,16 @@
       TaskDone,
       SubjectRegister,
     }, 
+<<<<<<< HEAD
       }
+=======
+    created: {
+      pushLogin() {
+      if (this.accessToken) {
+        this.$router.push("/login");
+      }
+    }
+  }  
+  }
+>>>>>>> de7073ff0a1ccf4d06b4b56eb8fc29184c9c83c1
 </script>
