@@ -57,28 +57,9 @@ export default {
         email: this.email,
         password: this.password,
       }).then(response => {
-<<<<<<< HEAD
         sessionStorage.setItem("userEmail", this.email)
         sessionStorage.setItem("accessToken", response.data.accessToken)
         this.msg = "You are authenticated!" 
-=======
-        var userToken = response.data.accessToken
-        var sessionMail = this.email
-
-        this.accessToken = true
-        this.msg = response.data.firstName + " is authenticated!",
-        this.loading = false, 
-        console.log(response);
-        this.$router.push({name: 'home'})
-        
-        function accessToken() {
-          sessionStorage.setItem("userEmail", sessionMail)
-          sessionStorage.setItem("accessToken", userToken)
-          sessionStorage.setItem("userName", response.data.firstName);
-        }
-        accessToken();
-                this.response = JSON.stringify(response, null, 2);
->>>>>>> de7073ff0a1ccf4d06b4b56eb8fc29184c9c83c1
       }).catch(error => {
         this.msg = error.response.data.error.message.description;
       })
@@ -86,17 +67,8 @@ export default {
           location.reload()
           this.loading = false,
           this.msg = false
-<<<<<<< HEAD
         });
     },
   },
-=======
-        }, 40000);
-        clearTimeout(setTimeout)
-        }
-      )
-    }
-  }
->>>>>>> de7073ff0a1ccf4d06b4b56eb8fc29184c9c83c1
 }
 </script>
