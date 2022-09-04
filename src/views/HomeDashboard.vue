@@ -14,11 +14,6 @@
     data: () => ({
       accessToken: sessionStorage.getItem("accessToken"),
     }),
-    created() {
-      if (!this.accessToken) {
-        this.$router.push("/login");
-      }
-    },
     components: {
       TableActivities,
       TaskRegister,

@@ -47,7 +47,7 @@ export default {
   }),
   created() {
       if (this.accessToken) {
-        this.$router.push("/");
+        this.$router.push('/');
       }
     },
   methods: {

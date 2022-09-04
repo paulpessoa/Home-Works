@@ -36,7 +36,7 @@ export default Vue.extend({
     AppFooter
   },
   created() {
-      !this.accessToken ? this.$router.push("/login") : null;
+      !this.accessToken ? this.$router.push('/login') : null;
     },
 });
 </script>

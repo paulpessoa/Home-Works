@@ -43,14 +43,14 @@ export default {
         this.emailConfirm = response.data.message
         console.log(this.emailConfirm)
         setTimeout(() => {
-          this.$router.push('/login')
+          this.$router.push('/')
           this.loading = false
           this.emailConfirm = null
         }, 2000)
       }).catch(error => {
         this.loading = false
         this.emailConfirm = error.response.data.error.message;
-        this.emailConfirm === 'Account already confirmed.' ? this.$router.push('/login') : null
+        this.emailConfirm === 'Account already confirmed.' ? this.$router.push('/') : null
       });
     },
   },
