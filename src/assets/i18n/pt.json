@@ -2,7 +2,8 @@
     "change_lang": "Mudar idioma",
     "access": "Acesso",
     "login": "Entrar",
-    "recover_password": "Recuperar senha",
+    "recover_account": "Recupere sua conta",
+    "recover": "Recuperar",
     "email": "E-mail",
     "password": "Senha",
     "register": "Cadastre-se",
@@ -33,5 +34,17 @@
     "register_a_subject": "Registrar uma disciplna",
     "done": "Concluída",
     "in_progress": "Em andamento",
-    "late": "Atrasada"
+    "late": "Atrasada",
+    "new_register": "Novo Registro",
+    "first_name": "Nome",
+    "last_name": "Sobrenome",
+    "new_password": "Novo Password",
+    "confirm_password": "Confirmar Password",
+    "security_verification": "Verificação de Segurança",
+    "verify": "Verificar",
+    "code_sent_to_email": "Código enviado para o e-mail",
+    "fill_this_field": "Preencha este campo",
+    "please_enter_a_valid_email": "Informe um e-mail válido",
+    "enter_a_password": "Informe uma senha",
+    "enter_the_same_as_the_previous_field": "Digite igual ao campo anterior"     
 }

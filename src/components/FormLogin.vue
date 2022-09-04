@@ -16,7 +16,7 @@
         {{ msg }}
       </v-alert>
       <v-card-actions class="row justify-center py-4">
-        <v-btn class="ma-4" color="orange lighten-2" text to="/reset-password">{{$t('recover_password')}} </v-btn>
+        <v-btn class="ma-4" color="orange lighten-2" text to="/reset-password">{{$t('recover_account')}} </v-btn>
         <v-btn class="ma-4" color="orange lighten-2" text to="/register">{{$t('register')}} </v-btn>
       </v-card-actions>
     </v-card>
@@ -45,6 +45,11 @@ export default {
       ],
     msg: null
   }),
+  created() {
+      if (this.accessToken) {
+        this.$router.push("/");
+      }
+    },
   methods: {
     userLogin() {
       this.loading = true;

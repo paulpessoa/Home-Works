@@ -20,7 +20,6 @@
             <v-container>
                 <v-form ref="form" @submit.prevent="createUser">
                     <v-row>
-                        <!------------------------------------------------------------------------------------------>
                         <v-col cols="12" sm="6" md="4" lg="5">
                             <v-text-field outlined dense hide-details clearable v-model="editedItem.name"
                                 :label="$t('activity_title')">
@@ -87,7 +86,6 @@
 
                             <v-card-text>
                                 <v-container>
-                                    <!------------------------------------------------------------------------------------------>
                                     <v-row>
                                         <v-col cols="12" sm="6" md="4" lg="4">
                                             <v-text-field outlined dense hide-details v-model="editedItem.name"
