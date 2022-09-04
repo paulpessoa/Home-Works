@@ -27,5 +27,12 @@
       TaskDone,
       SubjectRegister,
     }, 
+    created: {
+      pushLogin() {
+      if (this.accessToken) {
+        this.$router.push("/login");
       }
+    }
+  }  
+}
 </script>
