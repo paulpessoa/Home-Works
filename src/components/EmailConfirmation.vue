@@ -18,7 +18,7 @@
 
 <script>
 import axios from "axios";
-const url = "https://homeworks-api.vercel.app/account/confirm";
+const url = "https://homeworks-api.me/account/confirm";
 
 export default {
   name: "EmailConfirmation",

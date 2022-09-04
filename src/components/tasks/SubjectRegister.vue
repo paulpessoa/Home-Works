@@ -71,8 +71,8 @@
 
 <script>
 import axios from "axios";
-const URL_SUBJECT_CREATE = "https://homeworks-api.vercel.app/subject/create";
-const URL_SUBJECT_LIST = "https://homeworks-api.vercel.app/subject/list";
+const URL_SUBJECT_CREATE = "https://homeworks-api.me/subject/create";
+const URL_SUBJECT_LIST = "https://homeworks-api.me/subject/list";
 
 export default {
   name: "SubjectRegister",
