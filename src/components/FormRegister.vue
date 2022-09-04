@@ -24,10 +24,10 @@
       </v-alert>
 
      <v-card-actions class="row justify-center py-4">
-        <v-btn class="ma-4" color="orange lighten-2" text href="/reset-password">
-          {{$t('recover_account')}}
+        <v-btn class="ma-4" color="orange lighten-2" text to="/reset-password">
+          {{$t('recover_password')}}
         </v-btn>
-        <v-btn class="ma-4" color="orange lighten-2" text href="/login">
+        <v-btn class="ma-4" color="orange lighten-2" text to="/login">
           {{$t('login')}}
         </v-btn>
       </v-card-actions>
@@ -48,6 +48,7 @@ export default {
     email: null,
     password: null,
     confirmPassword: null,
+    
     nameRules: [(v) => !!v || $t('fill_this_field')],
     emailRules: [(v) => /.+@.+\..+/.test(v) || $t('enter_a_valid_email')],
     passwordRules: [(v) => !!v || $t('enter_a_password')],

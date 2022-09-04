@@ -8,7 +8,7 @@
                 <v-snackbar color="green" v-model="snackbar">
                     {{ msg }}
                     <template v-slot:action="{ attrs }">
-                        <v-btn color="white" href="/" :loading="loading" text v-bind="attrs"
+                        <v-btn color="white" to="/" :loading="loading" text v-bind="attrs"
                             @click="snackbar = false">
                             Close
                         </v-btn>

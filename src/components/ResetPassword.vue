@@ -16,7 +16,7 @@
 
       <v-card-actions class="row justify-center py-4">
         <v-btn class="ma-4" color="orange lighten-2" text to="/register"> {{$t('register')}} </v-btn>
-        <v-btn class="ma-4" color="orange lighten-2" text href="/login"> {{$t('login')}}</v-btn>
+        <v-btn class="ma-4" color="orange lighten-2" text to="/login"> {{$t('login')}}</v-btn>
       </v-card-actions>
     </v-card>
   </div>

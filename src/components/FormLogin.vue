@@ -57,16 +57,16 @@ export default {
         email: this.email,
         password: this.password,
       }).then(response => {
+        this.msg = "You are authenticated!" 
         sessionStorage.setItem("userEmail", this.email)
         sessionStorage.setItem("accessToken", response.data.accessToken)
-        this.msg = "You are authenticated!" 
+        location.reload()
       }).catch(error => {
-        this.msg = error.response.data.error.message.description;
+        this.msg = error.response.data.error.message;
+        console.log(this.msg)
       })
       .finally(() => {
-          location.reload()
-          this.loading = false,
-          this.msg = false
+        this.loading = false
         });
     },
   },

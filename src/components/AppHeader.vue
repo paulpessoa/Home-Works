@@ -34,7 +34,7 @@
     <v-snackbar color="green" v-model="snackbar">
       {{ msg }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="white" href="/" text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="white" to="/" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>

@@ -9,7 +9,7 @@
         <v-btn block x-large type="submit" color="#6557F5" :loading="loading" depressed class="justify-center white--text">{{$t('confirm')}}</v-btn>
       </v-form>
       <v-card-actions class="row justify-center py-4">
-        <v-btn class="ma-4" block color="orange lighten-2" text href="/"> {{$t('cancel')}}</v-btn>
+        <v-btn class="ma-4" block color="orange lighten-2" text to="/"> {{$t('cancel')}}</v-btn>
       </v-card-actions>
     </v-card>
   </div>
