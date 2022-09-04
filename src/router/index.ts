@@ -26,7 +26,14 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'home',
-    component: HomeDashboard
+    component: HomeDashboard,
+    children: [
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: HomeDashboard,
+      }
+    ]
   },
   {
     path: '/auth',
@@ -34,31 +41,31 @@ const routes: Array<RouteConfig> = [
     component: PageAuth,
     children: [
       {
-      path: '/login',
-      name: 'login',
-      component: FormLogin
+        path: '/login',
+        name: 'login',
+        component: FormLogin
       },
       {
-      path: '/register',
-      name: 'register',
-      component: FormRegister
+        path: '/register',
+        name: 'register',
+        component: FormRegister
       },
       {
-      path: '/email-confirmation',
-      name: 'email-confirmation',
-      component: EmailConfirmation
+        path: '/email-confirmation',
+        name: 'email-confirmation',
+        component: EmailConfirmation
       },
       {
-      path: '/reset-password',
-      name: 'reset-password',
-      component: ResetPassword
-      }, 
+        path: '/reset-password',
+        name: 'reset-password',
+        component: ResetPassword
+      },
       {
-      path: '/new-password',
-      name: 'new-password',
-      component: NewPassword
-      }, 
-  ]
+        path: '/new-password',
+        name: 'new-password',
+        component: NewPassword
+      },
+    ]
   }
 ]
 
