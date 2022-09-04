@@ -34,6 +34,13 @@ export default Vue.extend({
   components: {
     AppHeader,
     AppFooter
-  }
+  },
+  created() {
+      if (!this.accessToken) {
+        this.$router.push("/login");
+      } else {
+        this.$router.push("/");
+      }
+    },
 });
 </script>

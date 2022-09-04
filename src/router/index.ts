@@ -20,20 +20,13 @@ const routes: Array<RouteConfig> = [
     component: ErrorComponent
   },
   {
-    path: '' || '/' || 'home',
+    path: '' || '/' || 'home' || 'dashboard',
     redirect: { name: 'home' }
   },
   {
     path: '/',
     name: 'home',
-    component: HomeDashboard,
-    children: [
-      {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: HomeDashboard,
-      }
-    ]
+    component: HomeDashboard
   },
   {
     path: '/auth',

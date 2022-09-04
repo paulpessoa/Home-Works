@@ -45,11 +45,6 @@ export default {
       ],
     msg: null
   }),
-  created() {
-      if (this.accessToken) {
-        this.$router.push("/dashboard");
-      }
-    },
   methods: {
     userLogin() {
       this.loading = true;
