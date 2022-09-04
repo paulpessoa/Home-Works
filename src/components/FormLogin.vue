@@ -21,9 +21,6 @@
         <v-btn class="ma-4" color="orange lighten-2" text to="/register">{{$t('register')}} </v-btn>
       </v-card-actions>
     </v-card>
-    <div v-if="accessToken">
-      <TableActivities/>      
-  </div> 
   </div>
 
 </template>
@@ -64,9 +61,8 @@ export default {
         this.accessToken = true
         this.msg = response.data.firstName + " is authenticated!",
         this.loading = false, 
-        console.log(response)    
-        this.$router.push({name: 'dashboard'}, 
-        );
+        console.log(response);
+        this.$router.push({name: 'home'})
         
         function accessToken() {
           sessionStorage.setItem("userEmail", sessionMail)
@@ -85,13 +81,10 @@ export default {
           setTimeout(() => {
           this.msg = false
         }, 40000);
-        clearTimeout(setTimeout);
-      
-
-
-        });
-    },
-  },
-  components: { TableActivities }
+        clearTimeout(setTimeout)
+        }
+      )
+    }
+  }
 }
 </script>
