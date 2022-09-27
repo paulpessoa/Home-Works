@@ -26,6 +26,8 @@ import Vue from "vue";
 import AppFooter from "./components/AppFooter.vue";
 import AppHeader from "./components/AppHeader.vue";
 
+document.title = 'Home Works'
+
 export default Vue.extend({
   name: "App",
   data: () => ({
