@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <AppHeader />
-    <v-main style="background: #f0f0f0">
+    <v-main style="background: #f0f0f0" class="d-flex justify-center align-center">
 
       <div class="text-center mt-10" v-if="!accessToken">
         <a href="/" class="mr-4" style="text-decoration: none">
